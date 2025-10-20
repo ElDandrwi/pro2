@@ -16,19 +16,25 @@ public:
 
     void setAudioPlayer(PlayerAudio* player) { audioPlayer = player; }
 
-    // œÂ ⁄‘«‰ MainComponent Ì⁄—› √‰ «·„” Œœ„ ⁄«Ì“ Load
+   
     std::function<void()> onLoadFileRequest;
 
 private:
     juce::TextButton loadButton{ "Load Files" };
     juce::TextButton restartButton{ "Restart" };
     juce::TextButton stopButton{ "Stop" };
+	juce::TextButton muteButton{ "Mute" };
     juce::Slider volumeSlider;
 
     PlayerAudio* audioPlayer = nullptr;
+
+    float lastVolumeBeforeMute = 0.5f;
+
+	bool isMuted = false;
 
     void buttonClicked(juce::Button* button) override;
     void sliderValueChanged(juce::Slider* slider) override;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
+
