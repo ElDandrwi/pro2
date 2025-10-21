@@ -1,4 +1,4 @@
-﻿#include "MainComponent.h"
+#include "MainComponent.h"
 
 MainComponent::MainComponent()
 {
@@ -22,7 +22,6 @@ MainComponent::MainComponent()
                     }
                 });
         };
-
     addAndMakeVisible(guiPlayer);
 
     setSize(500, 250);
@@ -58,3 +57,5 @@ void MainComponent::resized()
 {
     guiPlayer.setBounds(getLocalBounds());
 }
+
+
