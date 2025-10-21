@@ -21,9 +21,11 @@ public:
 
 private:
     juce::TextButton loadButton{ "Load Files" };
-    juce::TextButton restartButton{ "Restart" };
-    juce::TextButton stopButton{ "Stop" };
 	juce::TextButton muteButton{ "Mute" };
+ juce::TextButton playButton{ "Play" };
+ juce::TextButton pauseButton{ "Pause" };
+ juce::TextButton gotoStartButton{ "|◄ Start" };
+ juce::TextButton gotoEndButton{ "End ►|" };
     juce::Slider volumeSlider;
 
     PlayerAudio* audioPlayer = nullptr;
@@ -37,4 +39,5 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
+
 
