@@ -39,22 +39,42 @@ void PlayerAudio::loadFile(const juce::File& file)
             nullptr,
             reader->sampleRate);
 
-        transportSource.start(); //  ‘€Ì· ›Ê—Ì
+        transportSource.start(); // √ä√î√õ√≠√° √ù√¶√ë√≠
     }
-}
-
-void PlayerAudio::start()
-{
-    transportSource.start();
-}
-
-void PlayerAudio::stop()
-{
-    transportSource.stop();
-    transportSource.setPosition(0.0);
 }
 
 void PlayerAudio::setGain(float gain)
 {
     transportSource.setGain(gain);
 }
+
+void PlayerAudio::play()
+{
+	transportSource.start();
+}
+
+void PlayerAudio::pause()
+{
+	transportSource.stop(); 
+}
+
+void PlayerAudio::setPosition(double seconds)
+{
+	transportSource.setPosition(seconds);
+}
+double PlayerAudio::getLengthInSeconds() const
+{
+    return transportSource.getLengthInSeconds();
+}
+
+void PlayerAudio::goToStart()
+{
+	transportSource.setPosition(0.0);
+}
+
+void PlayerAudio::goToEnd()
+{
+	transportSource.setPosition(transportSource.getLengthInSeconds());
+}
+
+
