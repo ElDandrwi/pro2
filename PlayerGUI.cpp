@@ -34,8 +34,8 @@ void PlayerGUI::paint(juce::Graphics& g)
 void PlayerGUI::resized()
 {
     int y = 20;
-    loadButton.setBounds(20, y, 100, 40);
-    muteButton.setBounds(40, 150, 80, 40);
+     loadButton.setBounds(80, y, 100, 40);
+ muteButton.setBounds(200 ,y, 100, 40);
  gotoStartButton.setBounds(20, 60, 80, 30);
  playButton.setBounds(110, 60, 80 ,  30  );
  pauseButton.setBounds(200, 60, 80,  30  );
@@ -95,6 +95,7 @@ void PlayerGUI::sliderValueChanged(juce::Slider* slider)
     if (slider == &volumeSlider && audioPlayer)
         audioPlayer->setGain((float)slider->getValue());
 }
+
 
 
 
