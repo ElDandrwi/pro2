@@ -3,8 +3,6 @@
 PlayerGUI::PlayerGUI()
 {
     addAndMakeVisible(loadButton);
-    addAndMakeVisible(restartButton);
-    addAndMakeVisible(stopButton);
     addAndMakeVisible(muteButton);
  addAndMakeVisible(playButton);
  addAndMakeVisible(pauseButton);
@@ -13,8 +11,6 @@ PlayerGUI::PlayerGUI()
     addAndMakeVisible(volumeSlider);
 
     loadButton.addListener(this);
-    restartButton.addListener(this);
-    stopButton.addListener(this);
     muteButton.addListener(this);
  playButton.addListener(this);
  pauseButton.addListener(this);
@@ -99,5 +95,6 @@ void PlayerGUI::sliderValueChanged(juce::Slider* slider)
     if (slider == &volumeSlider && audioPlayer)
         audioPlayer->setGain((float)slider->getValue());
 }
+
 
 
