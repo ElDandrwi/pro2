@@ -15,9 +15,13 @@ public:
 
     // Basic controls
     void loadFile(const juce::File& file);
-    void start();
-    void stop();
     void setGain(float gain);
+ void play();
+	void pause();   
+ void setPosition(double seconds);
+ double getLengthInSeconds() const;
+	void goToStart();
+	void goToEnd();
 
 private:
     juce::AudioFormatManager formatManager;
@@ -26,3 +30,4 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerAudio)
 };
+
