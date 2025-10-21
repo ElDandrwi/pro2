@@ -6,14 +6,20 @@ PlayerGUI::PlayerGUI()
     addAndMakeVisible(restartButton);
     addAndMakeVisible(stopButton);
     addAndMakeVisible(muteButton);
-
+ addAndMakeVisible(playButton);
+ addAndMakeVisible(pauseButton);
+ addAndMakeVisible(gotoStartButton);
+ addAndMakeVisible(gotoEndButton);
     addAndMakeVisible(volumeSlider);
 
     loadButton.addListener(this);
     restartButton.addListener(this);
     stopButton.addListener(this);
     muteButton.addListener(this);
-
+ playButton.addListener(this);
+ pauseButton.addListener(this);
+ gotoStartButton.addListener(this);
+ gotoEndButton.addListener(this);
 
     volumeSlider.setRange(0.0, 1.0, 0.01);
     volumeSlider.setValue(0.5);
@@ -33,9 +39,11 @@ void PlayerGUI::resized()
 {
     int y = 20;
     loadButton.setBounds(20, y, 100, 40);
-    restartButton.setBounds(140, y, 80, 40);
-    stopButton.setBounds(240, y, 80, 40);
     muteButton.setBounds(40, 150, 80, 40);
+ gotoStartButton.setBounds(20, 60, 80, 30);
+ playButton.setBounds(110, 60, 80 ,  30  );
+ pauseButton.setBounds(200, 60, 80,  30  );
+ gotoEndButton.setBounds(290, 60, 80, 30 );
 
     volumeSlider.setBounds(20, 100, getWidth() - 40, 30);
 }
@@ -46,17 +54,6 @@ void PlayerGUI::buttonClicked(juce::Button* button)
     {
         if (onLoadFileRequest)
             onLoadFileRequest();
-    }
-    else if (button == &restartButton)
-    {
-        if (audioPlayer)
-            audioPlayer->stop();
-            audioPlayer->start();
-    }
-    else if (button == &stopButton)
-    {
-        if (audioPlayer)
-            audioPlayer->stop();
     }
     else if (button == &muteButton)
     {
@@ -74,6 +71,27 @@ void PlayerGUI::buttonClicked(juce::Button* button)
             }
         }
     }
+	else if (button == &playButton)
+{
+	if (audioPlayer)
+		audioPlayer->play();
+}
+else if (button == &pauseButton)
+{
+	if (audioPlayer)
+		audioPlayer->pause();   
+}
+else if (button == &gotoStartButton)
+{
+	if (audioPlayer)
+		audioPlayer->goToStart();
+}
+else if (button == &gotoEndButton)
+{
+    if (audioPlayer)
+		audioPlayer->goToEnd();
+
+}
 }
 
 void PlayerGUI::sliderValueChanged(juce::Slider* slider)
@@ -81,4 +99,5 @@ void PlayerGUI::sliderValueChanged(juce::Slider* slider)
     if (slider == &volumeSlider && audioPlayer)
         audioPlayer->setGain((float)slider->getValue());
 }
+
 
