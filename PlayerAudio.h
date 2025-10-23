@@ -13,7 +13,7 @@ public:
     void releaseResources() override;
 
     void loadFile(const juce::File& file);
-    void setGain(float gain);
+    void setGain(double gain);
     void play();
     void pause();
     void setPosition(double seconds);
@@ -24,7 +24,8 @@ public:
     void setLooping(bool shouldLoop);
     bool isLooping() const { return isLoopEnabled; }
 
-  
+  	void setSpeed(double speed);
+
     void setABLoopPointA(double seconds);
     void setABLoopPointB(double seconds);
     void clearABLoopPoints();
@@ -50,3 +51,4 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerAudio)
 };
+
