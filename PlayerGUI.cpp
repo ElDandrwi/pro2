@@ -9,9 +9,14 @@ PlayerGUI::PlayerGUI()
     addAndMakeVisible(gotoStartButton);
     addAndMakeVisible(gotoEndButton);
     addAndMakeVisible(loopButton);
+    addAndMakeVisible(setAButton);
+    addAndMakeVisible(setBButton);
+    addAndMakeVisible(clearABButton);
+    addAndMakeVisible(abLoopButton);
     addAndMakeVisible(volumeSlider);
     addAndMakeVisible(positionSlider);
     addAndMakeVisible(timeLabel);
+    addAndMakeVisible(abLoopLabel);
 
     loadButton.addListener(this);
     muteButton.addListener(this);
@@ -20,6 +25,10 @@ PlayerGUI::PlayerGUI()
     gotoStartButton.addListener(this);
     gotoEndButton.addListener(this);
     loopButton.addListener(this);
+    setAButton.addListener(this);
+    setBButton.addListener(this);
+    clearABButton.addListener(this);
+    abLoopButton.addListener(this);
 
     volumeSlider.setRange(0.0, 1.0, 0.01);
     volumeSlider.setValue(0.5);
@@ -32,6 +41,9 @@ PlayerGUI::PlayerGUI()
 
     timeLabel.setText("0:00 / 0:00", juce::dontSendNotification);
     timeLabel.setJustificationType(juce::Justification::centred);
+
+    abLoopLabel.setText("A-B: --:-- / --:--", juce::dontSendNotification);
+    abLoopLabel.setJustificationType(juce::Justification::centred);
 
     startTimer(50);
 }
@@ -51,19 +63,26 @@ void PlayerGUI::resized()
     int y = 20;
     loadButton.setBounds(20, y, 100, 40);
     muteButton.setBounds(140, y, 100, 40);
-    loopButton.setBounds(250, y, 100, 40);
+    loopButton.setBounds(260, y, 100, 40);
 
-    int controlY = 70;
+    int sliderY = 70;
+    positionSlider.setBounds(20, sliderY, getWidth() - 40, 20);
+    timeLabel.setBounds(20, sliderY + 25, getWidth() - 40, 20);
+    abLoopLabel.setBounds(20, sliderY + 45, getWidth() - 40, 20);
+
+    int controlY = 120;
     gotoStartButton.setBounds(20, controlY, 80, 30);
     playButton.setBounds(110, controlY, 80, 30);
     pauseButton.setBounds(200, controlY, 80, 30);
     gotoEndButton.setBounds(290, controlY, 80, 30);
 
-    int sliderY = 110;
-    positionSlider.setBounds(20, sliderY, getWidth() - 40, 20);
-    timeLabel.setBounds(20, sliderY + 25, getWidth() - 40, 20);
+    int abY = 160;
+    setAButton.setBounds(20, abY, 80, 30);
+    setBButton.setBounds(110, abY, 80, 30);
+    clearABButton.setBounds(200, abY, 80, 30);
+    abLoopButton.setBounds(290, abY, 80, 30);
 
-    volumeSlider.setBounds(20, 150, getWidth() - 40, 30);
+    volumeSlider.setBounds(20, 200, getWidth() - 40, 30);
 }
 
 void PlayerGUI::buttonClicked(juce::Button* button)
@@ -116,10 +135,65 @@ void PlayerGUI::buttonClicked(juce::Button* button)
             bool newLoopState = !audioPlayer->isLooping();
             audioPlayer->setLooping(newLoopState);
 
+            
+            if (newLoopState && audioPlayer->getABLoopEnabled())
+            {
+                audioPlayer->setABLoopEnabled(false);
+                abLoopButton.setButtonText("A-B Loop: Off");
+                updateABLoopDisplay();
+            }
+
             if (newLoopState)
                 loopButton.setButtonText("Loop: On");
             else
                 loopButton.setButtonText("Loop: Off");
+        }
+    }
+    else if (button == &setAButton)
+    {
+        if (audioPlayer)
+        {
+            double currentPos = audioPlayer->getCurrentPosition();
+            audioPlayer->setABLoopPointA(currentPos);
+            updateABLoopDisplay();
+        }
+    }
+    else if (button == &setBButton)
+    {
+        if (audioPlayer)
+        {
+            double currentPos = audioPlayer->getCurrentPosition();
+            audioPlayer->setABLoopPointB(currentPos);
+            updateABLoopDisplay();
+        }
+    }
+    else if (button == &clearABButton)
+    {
+        if (audioPlayer)
+        {
+            audioPlayer->clearABLoopPoints();
+            abLoopButton.setButtonText("A-B Loop: Off");
+            updateABLoopDisplay();
+        }
+    }
+    else if (button == &abLoopButton)
+    {
+        if (audioPlayer && audioPlayer->hasABLoopPoints())
+        {
+            bool newABLoopState = !audioPlayer->getABLoopEnabled();
+            audioPlayer->setABLoopEnabled(newABLoopState);
+
+            
+            if (newABLoopState && audioPlayer->isLooping())
+            {
+                audioPlayer->setLooping(false);
+                loopButton.setButtonText("Loop: Off");
+            }
+
+            if (newABLoopState)
+                abLoopButton.setButtonText("A-B Loop: On");
+            else
+                abLoopButton.setButtonText("A-B Loop: Off");
         }
     }
 }
@@ -146,6 +220,7 @@ void PlayerGUI::timerCallback()
     {
         positionSlider.setValue(audioPlayer->getPositionRatio(), juce::dontSendNotification);
         updateTimeDisplay();
+        updateABLoopDisplay();
     }
 }
 
@@ -166,5 +241,26 @@ void PlayerGUI::updateTimeDisplay()
 
         juce::String timeText = formatTime(currentTime) + " / " + formatTime(totalTime);
         timeLabel.setText(timeText, juce::dontSendNotification);
+    }
+}
+
+void PlayerGUI::updateABLoopDisplay()
+{
+    if (audioPlayer != nullptr)
+    {
+        auto formatTime = [](double seconds) -> juce::String
+            {
+                if (seconds < 0) return "--:--";
+                int totalSeconds = static_cast<int>(seconds);
+                int mins = totalSeconds / 60;
+                int secs = totalSeconds % 60;
+                return juce::String(mins) + ":" + (secs < 10 ? "0" : "") + juce::String(secs);
+            };
+
+        double pointA = audioPlayer->getABLoopPointA();
+        double pointB = audioPlayer->getABLoopPointB();
+
+        juce::String abText = "A-B: " + formatTime(pointA) + " / " + formatTime(pointB);
+        abLoopLabel.setText(abText, juce::dontSendNotification);
     }
 }
