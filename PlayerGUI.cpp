@@ -13,6 +13,7 @@ PlayerGUI::PlayerGUI()
     addAndMakeVisible(setBButton);
     addAndMakeVisible(clearABButton);
     addAndMakeVisible(abLoopButton);
+    addAndMakeVisible(speedSlider);
     addAndMakeVisible(volumeSlider);
     addAndMakeVisible(positionSlider);
     addAndMakeVisible(timeLabel);
@@ -29,6 +30,11 @@ PlayerGUI::PlayerGUI()
     setBButton.addListener(this);
     clearABButton.addListener(this);
     abLoopButton.addListener(this);
+
+	speedSlider.setRange(0.5, 2.0, 0.1);
+	speedSlider.setValue(1.0);
+	speedSlider.addListener(this);
+	speedSlider.setTextValueSuffix("X");
 
     volumeSlider.setRange(0.0, 1.0, 0.01);
     volumeSlider.setValue(0.5);
@@ -69,6 +75,7 @@ void PlayerGUI::resized()
     positionSlider.setBounds(20, sliderY, getWidth() - 40, 20);
     timeLabel.setBounds(20, sliderY + 25, getWidth() - 40, 20);
     abLoopLabel.setBounds(20, sliderY + 45, getWidth() - 40, 20);
+    speedSlider.setBounds(20, sliderY + 100, getWidth() - 40, 20);
 
     int controlY = 120;
     gotoStartButton.setBounds(20, controlY, 80, 30);
@@ -83,6 +90,7 @@ void PlayerGUI::resized()
     abLoopButton.setBounds(290, abY, 80, 30);
 
     volumeSlider.setBounds(20, 200, getWidth() - 40, 30);
+
 }
 
 void PlayerGUI::buttonClicked(juce::Button* button)
@@ -202,7 +210,7 @@ void PlayerGUI::sliderValueChanged(juce::Slider* slider)
 {
     if (slider == &volumeSlider && audioPlayer)
     {
-        audioPlayer->setGain((float)slider->getValue());
+        audioPlayer->setGain((double)slider->getValue());
     }
     else if (slider == &positionSlider && audioPlayer)
     {
@@ -211,6 +219,10 @@ void PlayerGUI::sliderValueChanged(juce::Slider* slider)
         double newPosition = positionRatio * totalLength;
         audioPlayer->setPosition(newPosition);
         updateTimeDisplay();
+    }
+    else if (slider == &speedSlider && audioPlayer)
+    {
+		audioPlayer->setSpeed((double)slider->getValue());
     }
 }
 
@@ -264,3 +276,4 @@ void PlayerGUI::updateABLoopDisplay()
         abLoopLabel.setText(abText, juce::dontSendNotification);
     }
 }
+
