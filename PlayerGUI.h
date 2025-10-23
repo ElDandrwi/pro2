@@ -27,9 +27,14 @@ private:
     juce::TextButton gotoStartButton{ "Start" };
     juce::TextButton gotoEndButton{ "End" };
     juce::TextButton loopButton{ "Loop: Off" };
+    juce::TextButton setAButton{ "A" };
+    juce::TextButton setBButton{ "B" };
+    juce::TextButton clearABButton{ "Clear" };
+    juce::TextButton abLoopButton{ "A-B Loop: Off" };
     juce::Slider volumeSlider;
     juce::Slider positionSlider;
     juce::Label timeLabel;
+    juce::Label abLoopLabel;
 
     PlayerAudio* audioPlayer = nullptr;
 
@@ -40,6 +45,7 @@ private:
     void sliderValueChanged(juce::Slider* slider) override;
     void timerCallback() override;
     void updateTimeDisplay();
+    void updateABLoopDisplay();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
