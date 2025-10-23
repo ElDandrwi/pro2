@@ -24,7 +24,7 @@ MainComponent::MainComponent()
         };
     addAndMakeVisible(guiPlayer);
 
-    setSize(500, 250);
+    setSize(500, 280);
     setAudioChannels(0, 2);
 }
 
@@ -57,5 +57,3 @@ void MainComponent::resized()
 {
     guiPlayer.setBounds(getLocalBounds());
 }
-
-
