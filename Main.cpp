@@ -28,7 +28,7 @@ private:
         {
             setUsingNativeTitleBar(true);
             setContentOwned(new MainComponent(), true);
-            centreWithSize(500, 280); 
+            centreWithSize(500, 500); 
             setVisible(true);
         }
 
@@ -42,3 +42,4 @@ private:
 };
 
 START_JUCE_APPLICATION(SimpleAudioPlayer)
+
