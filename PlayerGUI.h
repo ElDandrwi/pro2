@@ -31,6 +31,7 @@ private:
     juce::TextButton setBButton{ "B" };
     juce::TextButton clearABButton{ "Clear" };
     juce::TextButton abLoopButton{ "A-B Loop: Off" };
+	juce::Slider speedSlider;
     juce::Slider volumeSlider;
     juce::Slider positionSlider;
     juce::Label timeLabel;
@@ -49,3 +50,4 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
+
