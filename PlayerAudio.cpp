@@ -71,7 +71,7 @@ void PlayerAudio::loadFile(const juce::File& file)
     }
 }
 
-void PlayerAudio::setGain(float gain)
+void PlayerAudio::setGain(double gain)
 {
     transportSource.setGain(gain);
 }
@@ -184,3 +184,15 @@ double PlayerAudio::getPositionRatio() const
         return getCurrentPosition() / length;
     return 0.0;
 }
+
+void PlayerAudio::setSpeed(double speed)
+{
+    if (readerSource == nullptr)
+		return;
+    transportSource.setSource(readerSource.get(),
+        0,
+        nullptr,
+        readerSource->getAudioFormatReader()->sampleRate * speed);
+	transportSource.start();
+}
+
