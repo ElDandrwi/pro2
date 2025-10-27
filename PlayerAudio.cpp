@@ -188,11 +188,21 @@ double PlayerAudio::getPositionRatio() const
 void PlayerAudio::setSpeed(double speed)
 {
     if (readerSource == nullptr)
-		return;
+        return;
+
+    const double currentPos = transportSource.getCurrentPosition();
+    const bool wasPlaying = transportSource.isPlaying();
+
+    if (wasPlaying)
+        transportSource.stop();
+
     transportSource.setSource(readerSource.get(),
         0,
         nullptr,
         readerSource->getAudioFormatReader()->sampleRate * speed);
-	transportSource.start();
-}
 
+    transportSource.setPosition(currentPos);
+
+    if (wasPlaying)
+        transportSource.start();
+}
