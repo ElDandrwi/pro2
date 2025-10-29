@@ -19,6 +19,7 @@ MainComponent::MainComponent()
                     if (file.existsAsFile())
                     {
                         audioPlayer.loadFile(file);
+                        guiPlayer.loadFileForWaveform(file);
                     }
                 });
         };
@@ -56,4 +57,5 @@ void MainComponent::resized()
 {
     guiPlayer.setBounds(getLocalBounds());
 }
+
 
