@@ -37,7 +37,7 @@ public:
 
     double getCurrentPosition() const;
     double getPositionRatio() const;
-
+ juce::String getFileInfo() const;
 private:
     juce::AudioFormatManager formatManager;
     std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
@@ -48,7 +48,8 @@ private:
     double abLoopPointA = -1.0;
     double abLoopPointB = -1.0;
     double totalLengthInSeconds = 0.0;
-
+ juce::File currentFile;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerAudio)
 };
+
 
