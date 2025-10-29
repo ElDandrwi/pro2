@@ -52,8 +52,12 @@ PlayerGUI::PlayerGUI()
 
     abLoopLabel.setText("A-B: --:-- / --:--", juce::dontSendNotification);
     abLoopLabel.setJustificationType(juce::Justification::centred);
-
-    startTimer(50);
+  startTimer(50);
+  addAndMakeVisible(fileInfoLabel);
+  fileInfoLabel.setJustificationType(juce::Justification::centredLeft);
+  fileInfoLabel.setFont(juce::Font(13.0f));
+  fileInfoLabel.setColour(juce::Label::textColourId, juce::Colours::white);
+  
 }
 
 PlayerGUI::~PlayerGUI()
@@ -94,7 +98,7 @@ void PlayerGUI::resized()
     volumeSlider.setBounds(20, 200, getWidth() - 40, 30);
 	
     waveformDisplay.setBounds(20, 300, getWidth() - 40, 80);
-
+fileInfoLabel.setBounds(20, 400, getWidth() - 40, 60);
 }
 
 void PlayerGUI::buttonClicked(juce::Button* button)
@@ -293,3 +297,4 @@ void PlayerGUI::loadFileForWaveform(const juce::File& file)
     thumbnail.setSource(new juce::FileInputSource(file));
     waveformDisplay.repaint();
 }
+
