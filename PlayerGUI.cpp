@@ -2,6 +2,7 @@
 
 PlayerGUI::PlayerGUI()
 {
+	formatManager.registerBasicFormats();
     addAndMakeVisible(loadButton);
     addAndMakeVisible(muteButton);
     addAndMakeVisible(playButton);
@@ -18,6 +19,7 @@ PlayerGUI::PlayerGUI()
     addAndMakeVisible(positionSlider);
     addAndMakeVisible(timeLabel);
     addAndMakeVisible(abLoopLabel);
+	addAndMakeVisible(waveformDisplay);
 
     loadButton.addListener(this);
     muteButton.addListener(this);
@@ -90,6 +92,8 @@ void PlayerGUI::resized()
     abLoopButton.setBounds(290, abY, 80, 30);
 
     volumeSlider.setBounds(20, 200, getWidth() - 40, 30);
+	
+    waveformDisplay.setBounds(20, 300, getWidth() - 40, 80);
 
 }
 
@@ -104,12 +108,12 @@ void PlayerGUI::buttonClicked(juce::Button* button)
     {
         if (audioPlayer) {
             if (isMuted) {
-                volumeSlider.setValue(lastVolumeBeforeMute);
+                volumeSlider.setValue(BeforeMute);
                 isMuted = false;
                 muteButton.setButtonText("Mute");
             }
             else {
-                lastVolumeBeforeMute = (float)volumeSlider.getValue();
+                BeforeMute = (float)volumeSlider.getValue();
                 volumeSlider.setValue(0.0);
                 isMuted = true;
                 muteButton.setButtonText("Unmute");
@@ -233,6 +237,9 @@ void PlayerGUI::timerCallback()
         positionSlider.setValue(audioPlayer->getPositionRatio(), juce::dontSendNotification);
         updateTimeDisplay();
         updateABLoopDisplay();
+
+		waveformDisplay.setPositionRelative(audioPlayer->getPositionRatio());
+
     }
 }
 
@@ -277,4 +284,12 @@ void PlayerGUI::updateABLoopDisplay()
     }
 }
 
+void PlayerGUI::loadFileForWaveform(const juce::File& file)
+{
+    if (!file.existsAsFile())
+        return;
 
+    thumbnail.clear();
+    thumbnail.setSource(new juce::FileInputSource(file));
+    waveformDisplay.repaint();
+}
