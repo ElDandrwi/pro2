@@ -90,7 +90,7 @@ private:
 
     PlayerAudio* audioPlayer = nullptr;
 
-    float lastVolumeBeforeMute = 0.5f;
+    float BeforeMute = 0.5f;
     bool isMuted = false;
 
     juce::AudioFormatManager formatManager;
@@ -106,5 +106,6 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
+
 
 
