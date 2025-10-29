@@ -87,6 +87,7 @@ private:
     juce::Slider positionSlider;
     juce::Label timeLabel;
     juce::Label abLoopLabel;
+  juce::Label fileInfoLabel;
 
     PlayerAudio* audioPlayer = nullptr;
 
@@ -106,6 +107,7 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
+
 
 
 
