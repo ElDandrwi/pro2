@@ -81,7 +81,7 @@ void PlayerGUI::resized()
     positionSlider.setBounds(20, sliderY, getWidth() - 40, 20);
     timeLabel.setBounds(20, sliderY + 25, getWidth() - 40, 20);
     abLoopLabel.setBounds(20, sliderY + 45, getWidth() - 40, 20);
-    speedSlider.setBounds(20, sliderY + 150, getWidth() - 40, 20);
+    speedSlider.setBounds(20, sliderY + 180, getWidth() - 40, 20);
 
     int controlY = 120;
     gotoStartButton.setBounds(20, controlY, 80, 30);
@@ -283,7 +283,7 @@ void PlayerGUI::updateABLoopDisplay()
         double pointA = audioPlayer->getABLoopPointA();
         double pointB = audioPlayer->getABLoopPointB();
 
-        juce::String abText = "A-B: " + formatTime(pointA) + " / " + formatTime(pointB);
+        juce::String abText = "From " + formatTime(pointA) + " To " + formatTime(pointB);
         abLoopLabel.setText(abText, juce::dontSendNotification);
     }
 }
@@ -297,4 +297,5 @@ void PlayerGUI::loadFileForWaveform(const juce::File& file)
     thumbnail.setSource(new juce::FileInputSource(file));
     waveformDisplay.repaint();
 }
+
 
