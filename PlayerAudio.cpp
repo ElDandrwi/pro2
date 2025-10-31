@@ -48,6 +48,9 @@ void PlayerAudio::loadFile(const juce::File& file)
     if (auto* reader = formatManager.createReaderFor(file))
     {
         transportSource.stop();
+
+		save(currentFile);
+
         transportSource.setSource(nullptr);
         readerSource.reset();
 
@@ -64,8 +67,19 @@ void PlayerAudio::loadFile(const juce::File& file)
             readerSource->setLooping(isLoopEnabled);
         }
 
+        if (SaveList.find(file) != SaveList.end())
+        {
+            transportSource.setPosition(SaveList[file]);
+        }
+        else
+        {
+            transportSource.setPosition(0.0);
+		}
+
         
         clearABLoopPoints();
+
+        currentFile= file;
 
         transportSource.start();
     }
@@ -104,6 +118,19 @@ void PlayerAudio::goToStart()
 void PlayerAudio::goToEnd()
 {
     transportSource.setPosition(transportSource.getLengthInSeconds());
+}
+
+void PlayerAudio::save(const juce::File& file)
+{
+    if(readerSource == nullptr)
+        return;
+    auto* reader = readerSource->getAudioFormatReader();
+    if (reader == nullptr)
+        return;
+    currentPos = transportSource.getCurrentPosition();
+    if (SaveList.find(file) != SaveList.end())
+        SaveList.erase(file);
+	SaveList.insert(make_pair(file, currentPos));
 }
 
 void PlayerAudio::setLooping(bool shouldLoop)
@@ -190,7 +217,7 @@ void PlayerAudio::setSpeed(double speed)
     if (readerSource == nullptr)
         return;
 
-    const double currentPos = transportSource.getCurrentPosition();
+    currentPos = transportSource.getCurrentPosition();
     const bool wasPlaying = transportSource.isPlaying();
 
     if (wasPlaying)
@@ -234,3 +261,20 @@ juce::String PlayerAudio::getFileInfo() const
 
     return info;
 }
+
+
+juce::String PlayerAudio::getSave() const
+{
+    juce::String info;
+
+	info += " --Saved-- \n";
+
+    for (const auto& pair : SaveList)
+    {
+        juce::String filePath = pair.first.getFileName();
+        double position = pair.second;
+        info += "File: " + filePath + "\n | Position: " + juce::String(position, 2) + " sec\n\n";
+    }
+    return info;
+}
+
