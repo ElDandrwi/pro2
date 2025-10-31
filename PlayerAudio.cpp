@@ -206,3 +206,31 @@ void PlayerAudio::setSpeed(double speed)
     if (wasPlaying)
         transportSource.start();
 }
+juce::String PlayerAudio::getFileInfo() const
+{
+    if (readerSource == nullptr)
+        return "No file loaded.";
+
+    auto* reader = readerSource->getAudioFormatReader();
+    if (reader == nullptr)
+        return "No reader available.";
+
+    juce::String info;
+
+    
+    auto& meta = reader->metadataValues;
+    juce::String title = meta.getValue("title", "");
+    juce::String artist = meta.getValue("artist", "");
+
+    if (!title.isEmpty())  info += "Title: " + title + "\n";
+    if (!artist.isEmpty()) info += "Artist: " + artist + "\n";
+
+    
+    double duration = reader->lengthInSamples / reader->sampleRate;
+    info += "Duration: " + juce::String(duration, 2) + " sec\n";
+
+   
+    info += "File Format: " + reader->getFormatName();
+
+    return info;
+}
