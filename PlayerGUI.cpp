@@ -52,12 +52,17 @@ PlayerGUI::PlayerGUI()
 
     abLoopLabel.setText("A-B: --:-- / --:--", juce::dontSendNotification);
     abLoopLabel.setJustificationType(juce::Justification::centred);
-  startTimer(50);
-  addAndMakeVisible(fileInfoLabel);
-  fileInfoLabel.setJustificationType(juce::Justification::centredLeft);
-  fileInfoLabel.setFont(juce::Font(13.0f));
-  fileInfoLabel.setColour(juce::Label::textColourId, juce::Colours::white);
+	
+ 	addAndMakeVisible(fileInfoLabel);
+ 	fileInfoLabel.setJustificationType(juce::Justification::centredLeft);
+ 	fileInfoLabel.setFont(juce::Font(13.0f));
+ 	fileInfoLabel.setColour(juce::Label::textColourId, juce::Colours::white);
   
+	addAndMakeVisible(SaveLabel);
+	SaveLabel.setText(" --SAVE-- \n", juce::dontSendNotification);
+
+    startTimer(50);
+	
 }
 
 PlayerGUI::~PlayerGUI()
@@ -78,10 +83,10 @@ void PlayerGUI::resized()
     loopButton.setBounds(260, y, 100, 40);
 
     int sliderY = 70;
-    positionSlider.setBounds(20, sliderY, getWidth() - 40, 20);
-    timeLabel.setBounds(20, sliderY + 25, getWidth() - 40, 20);
-    abLoopLabel.setBounds(20, sliderY + 45, getWidth() - 40, 20);
-    speedSlider.setBounds(20, sliderY + 180, getWidth() - 40, 20);
+    positionSlider.setBounds(20, sliderY, 460, 20);
+    timeLabel.setBounds(20, sliderY + 25, 460, 20);
+    abLoopLabel.setBounds(20, sliderY + 45, 460, 20);
+    speedSlider.setBounds(20, sliderY + 180, 460, 20);
 
     int controlY = 120;
     gotoStartButton.setBounds(20, controlY, 80, 30);
@@ -95,10 +100,13 @@ void PlayerGUI::resized()
     clearABButton.setBounds(200, abY, 80, 30);
     abLoopButton.setBounds(290, abY, 80, 30);
 
-    volumeSlider.setBounds(20, 200, getWidth() - 40, 30);
+    volumeSlider.setBounds(20, 200, 460, 30);
 	
-    waveformDisplay.setBounds(20, 300, getWidth() - 40, 80);
-fileInfoLabel.setBounds(20, 400, getWidth() - 40, 60);
+    waveformDisplay.setBounds(20, 300, 460, 80);
+    fileInfoLabel.setBounds(20, 400, 460, 60);
+
+	SaveLabel.setBounds(520, 20, 260, getHeight()-30);
+
 }
 
 void PlayerGUI::buttonClicked(juce::Button* button)
@@ -297,5 +305,6 @@ void PlayerGUI::loadFileForWaveform(const juce::File& file)
     thumbnail.setSource(new juce::FileInputSource(file));
     waveformDisplay.repaint();
 }
+
 
 
