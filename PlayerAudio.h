@@ -1,6 +1,8 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include <map>
+using namespace std;
 
 class PlayerAudio : public juce::AudioSource
 {
@@ -20,6 +22,7 @@ public:
     double getLengthInSeconds() const;
     void goToStart();
     void goToEnd();
+	void save(const juce::File& file);
 
     void setLooping(bool shouldLoop);
     bool isLooping() const { return isLoopEnabled; }
@@ -37,7 +40,9 @@ public:
 
     double getCurrentPosition() const;
     double getPositionRatio() const;
- juce::String getFileInfo() const;
+    juce::String getFileInfo() const;
+    juce::String getSave() const;
+
 private:
     juce::AudioFormatManager formatManager;
     std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
@@ -48,8 +53,13 @@ private:
     double abLoopPointA = -1.0;
     double abLoopPointB = -1.0;
     double totalLengthInSeconds = 0.0;
- juce::File currentFile;
+	double currentPos = 0.0;
+    juce::File currentFile;
+	map<juce::File,double> SaveList;
+	double previoustime = 0.0;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerAudio)
 };
+
 
 
