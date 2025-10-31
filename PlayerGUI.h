@@ -19,6 +19,10 @@ public:
 
     void loadFileForWaveform(const juce::File& file);
 
+void updateFileInfoLabel(const juce::String& text)
+    {
+        fileInfoLabel.setText(text, juce::dontSendNotification);
+    }
     std::function<void()> onLoadFileRequest;
 
 private:
@@ -107,6 +111,7 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
+
 
 
 
