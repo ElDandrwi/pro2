@@ -19,11 +19,16 @@ public:
 
     void loadFileForWaveform(const juce::File& file);
 
-void updateFileInfoLabel(const juce::String& text)
+	void updateFileInfoLabel(const juce::String& text)
     {
         fileInfoLabel.setText(text, juce::dontSendNotification);
     }
     std::function<void()> onLoadFileRequest;
+
+    void updateSaveLabel(const juce::String& text)
+    {
+        SaveLabel.setText(text, juce::dontSendNotification);
+    }
 
 private:
     struct WaveformDisplay : public juce::Component, public juce::ChangeListener
@@ -91,7 +96,8 @@ private:
     juce::Slider positionSlider;
     juce::Label timeLabel;
     juce::Label abLoopLabel;
-  juce::Label fileInfoLabel;
+	juce::Label fileInfoLabel;
+	juce::Label SaveLabel;
 
     PlayerAudio* audioPlayer = nullptr;
 
@@ -111,6 +117,7 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
+
 
 
 
