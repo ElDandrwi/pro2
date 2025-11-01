@@ -2,7 +2,7 @@
 
 PlayerGUI::PlayerGUI()
 {
-	formatManager.registerBasicFormats();
+    formatManager.registerBasicFormats();
     addAndMakeVisible(loadButton);
     addAndMakeVisible(muteButton);
     addAndMakeVisible(playButton);
@@ -14,12 +14,16 @@ PlayerGUI::PlayerGUI()
     addAndMakeVisible(setBButton);
     addAndMakeVisible(clearABButton);
     addAndMakeVisible(abLoopButton);
+    addAndMakeVisible(jumpBackButton);
+    addAndMakeVisible(jumpForwardButton);
     addAndMakeVisible(speedSlider);
     addAndMakeVisible(volumeSlider);
     addAndMakeVisible(positionSlider);
     addAndMakeVisible(timeLabel);
     addAndMakeVisible(abLoopLabel);
-	addAndMakeVisible(waveformDisplay);
+    addAndMakeVisible(waveformDisplay);
+    addAndMakeVisible(fileInfoLabel);
+    addAndMakeVisible(SaveLabel);
 
     loadButton.addListener(this);
     muteButton.addListener(this);
@@ -32,11 +36,13 @@ PlayerGUI::PlayerGUI()
     setBButton.addListener(this);
     clearABButton.addListener(this);
     abLoopButton.addListener(this);
+    jumpBackButton.addListener(this);
+    jumpForwardButton.addListener(this);
 
-	speedSlider.setRange(0.5, 2.0, 0.1);
-	speedSlider.setValue(1.0);
-	speedSlider.addListener(this);
-	speedSlider.setTextValueSuffix("X");
+    speedSlider.setRange(0.5, 2.0, 0.1);
+    speedSlider.setValue(1.0);
+    speedSlider.addListener(this);
+    speedSlider.setTextValueSuffix("X");
 
     volumeSlider.setRange(0.0, 1.0, 0.01);
     volumeSlider.setValue(0.5);
@@ -52,17 +58,14 @@ PlayerGUI::PlayerGUI()
 
     abLoopLabel.setText("A-B: --:-- / --:--", juce::dontSendNotification);
     abLoopLabel.setJustificationType(juce::Justification::centred);
-	
- 	addAndMakeVisible(fileInfoLabel);
- 	fileInfoLabel.setJustificationType(juce::Justification::centredLeft);
- 	fileInfoLabel.setFont(juce::Font(13.0f));
- 	fileInfoLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-  
-	addAndMakeVisible(SaveLabel);
-	SaveLabel.setText(" --SAVE-- \n", juce::dontSendNotification);
+
+    fileInfoLabel.setJustificationType(juce::Justification::centredLeft);
+    fileInfoLabel.setFont(juce::Font(13.0f));
+    fileInfoLabel.setColour(juce::Label::textColourId, juce::Colours::white);
+
+    SaveLabel.setText(" --SAVE-- \n", juce::dontSendNotification);
 
     startTimer(50);
-	
 }
 
 PlayerGUI::~PlayerGUI()
@@ -77,36 +80,55 @@ void PlayerGUI::paint(juce::Graphics& g)
 
 void PlayerGUI::resized()
 {
-    int y = 20;
-    loadButton.setBounds(20, y, 100, 40);
-    muteButton.setBounds(140, y, 100, 40);
-    loopButton.setBounds(260, y, 100, 40);
+    auto area = getLocalBounds().reduced(10);
+    auto topRow = area.removeFromTop(50);
+    loadButton.setBounds(topRow.removeFromLeft(100));
+    topRow.removeFromLeft(10);
+    muteButton.setBounds(topRow.removeFromLeft(100));
+    topRow.removeFromLeft(10);
+    loopButton.setBounds(topRow.removeFromLeft(100));
 
-    int sliderY = 70;
-    positionSlider.setBounds(20, sliderY, 460, 20);
-    timeLabel.setBounds(20, sliderY + 25, 460, 20);
-    abLoopLabel.setBounds(20, sliderY + 45, 460, 20);
-    speedSlider.setBounds(20, sliderY + 180, 460, 20);
+    area.removeFromTop(10);
+    auto progressArea = area.removeFromTop(70);
+    positionSlider.setBounds(progressArea.removeFromTop(20));
+    timeLabel.setBounds(progressArea.removeFromTop(25));
+    abLoopLabel.setBounds(progressArea.removeFromTop(25));
 
-    int controlY = 120;
-    gotoStartButton.setBounds(20, controlY, 80, 30);
-    playButton.setBounds(110, controlY, 80, 30);
-    pauseButton.setBounds(200, controlY, 80, 30);
-    gotoEndButton.setBounds(290, controlY, 80, 30);
+    area.removeFromTop(10);
+    auto playControls = area.removeFromTop(40);
+    int buttonWidth = 70;
 
-    int abY = 160;
-    setAButton.setBounds(20, abY, 80, 30);
-    setBButton.setBounds(110, abY, 80, 30);
-    clearABButton.setBounds(200, abY, 80, 30);
-    abLoopButton.setBounds(290, abY, 80, 30);
+    gotoStartButton.setBounds(playControls.removeFromLeft(buttonWidth));
+    playControls.removeFromLeft(5);
+    jumpBackButton.setBounds(playControls.removeFromLeft(buttonWidth));
+    playControls.removeFromLeft(5);
+    playButton.setBounds(playControls.removeFromLeft(buttonWidth));
+    playControls.removeFromLeft(5);
+    pauseButton.setBounds(playControls.removeFromLeft(buttonWidth));
+    playControls.removeFromLeft(5);
+    jumpForwardButton.setBounds(playControls.removeFromLeft(buttonWidth));
+    playControls.removeFromLeft(5);
+    gotoEndButton.setBounds(playControls.removeFromLeft(buttonWidth));
 
-    volumeSlider.setBounds(20, 200, 460, 30);
-	
-    waveformDisplay.setBounds(20, 300, 460, 80);
-    fileInfoLabel.setBounds(20, 400, 460, 60);
+    area.removeFromTop(10);
+    auto abControls = area.removeFromTop(40);
+    setAButton.setBounds(abControls.removeFromLeft(buttonWidth));
+    abControls.removeFromLeft(5);
+    setBButton.setBounds(abControls.removeFromLeft(buttonWidth));
+    abControls.removeFromLeft(5);
+    clearABButton.setBounds(abControls.removeFromLeft(buttonWidth));
+    abControls.removeFromLeft(5);
+    abLoopButton.setBounds(abControls.removeFromLeft(buttonWidth));
 
-	SaveLabel.setBounds(520, 20, 260, getHeight()-30);
+    area.removeFromTop(10);
+    volumeSlider.setBounds(area.removeFromTop(30));
+    area.removeFromTop(5);
+    speedSlider.setBounds(area.removeFromTop(25));
 
+    area.removeFromTop(10);
+    waveformDisplay.setBounds(area.removeFromTop(100));
+    area.removeFromTop(10);
+    fileInfoLabel.setBounds(area);
 }
 
 void PlayerGUI::buttonClicked(juce::Button* button)
@@ -159,7 +181,6 @@ void PlayerGUI::buttonClicked(juce::Button* button)
             bool newLoopState = !audioPlayer->isLooping();
             audioPlayer->setLooping(newLoopState);
 
-            
             if (newLoopState && audioPlayer->getABLoopEnabled())
             {
                 audioPlayer->setABLoopEnabled(false);
@@ -207,7 +228,6 @@ void PlayerGUI::buttonClicked(juce::Button* button)
             bool newABLoopState = !audioPlayer->getABLoopEnabled();
             audioPlayer->setABLoopEnabled(newABLoopState);
 
-            
             if (newABLoopState && audioPlayer->isLooping())
             {
                 audioPlayer->setLooping(false);
@@ -215,10 +235,20 @@ void PlayerGUI::buttonClicked(juce::Button* button)
             }
 
             if (newABLoopState)
-                abLoopButton.setButtonText("A-B Loop: On");
+                abLoopButton.setButtonText("Custom Loop: On");  
             else
-                abLoopButton.setButtonText("A-B Loop: Off");
+                abLoopButton.setButtonText("Custom Loop: Off"); 
         }
+    }
+    else if (button == &jumpBackButton)
+    {
+        if (audioPlayer)
+            audioPlayer->jumpBackward(10.0);
+    }
+    else if (button == &jumpForwardButton)
+    {
+        if (audioPlayer)
+            audioPlayer->jumpForward(10.0);
     }
 }
 
@@ -238,7 +268,7 @@ void PlayerGUI::sliderValueChanged(juce::Slider* slider)
     }
     else if (slider == &speedSlider && audioPlayer)
     {
-		audioPlayer->setSpeed((double)slider->getValue());
+        audioPlayer->setSpeed((double)slider->getValue());
     }
 }
 
@@ -250,8 +280,9 @@ void PlayerGUI::timerCallback()
         updateTimeDisplay();
         updateABLoopDisplay();
 
-		waveformDisplay.setPositionRelative(audioPlayer->getPositionRatio());
+        waveformDisplay.setPositionRelative(audioPlayer->getPositionRatio());
 
+        fileInfoLabel.setText(audioPlayer->getFileInfo(), juce::dontSendNotification);
     }
 }
 
@@ -305,6 +336,3 @@ void PlayerGUI::loadFileForWaveform(const juce::File& file)
     thumbnail.setSource(new juce::FileInputSource(file));
     waveformDisplay.repaint();
 }
-
-
-
