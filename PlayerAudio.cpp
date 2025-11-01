@@ -18,7 +18,6 @@ void PlayerAudio::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferTo
 {
     transportSource.getNextAudioBlock(bufferToFill);
 
-
     if (isABLoopEnabled && hasABLoopPoints())
     {
         double currentPos = getCurrentPosition();
@@ -28,7 +27,6 @@ void PlayerAudio::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferTo
             transportSource.setPosition(abLoopPointA);
         }
     }
-
     else if (isLoopEnabled && readerSource != nullptr)
     {
         if (transportSource.hasStreamFinished())
@@ -48,8 +46,7 @@ void PlayerAudio::loadFile(const juce::File& file)
     if (auto* reader = formatManager.createReaderFor(file))
     {
         transportSource.stop();
-
-		save(currentFile);
+        save(currentFile);
 
         transportSource.setSource(nullptr);
         readerSource.reset();
@@ -74,13 +71,10 @@ void PlayerAudio::loadFile(const juce::File& file)
         else
         {
             transportSource.setPosition(0.0);
-		}
+        }
 
-        
         clearABLoopPoints();
-
-        currentFile= file;
-
+        currentFile = file;
         transportSource.start();
     }
 }
@@ -122,7 +116,7 @@ void PlayerAudio::goToEnd()
 
 void PlayerAudio::save(const juce::File& file)
 {
-    if(readerSource == nullptr)
+    if (readerSource == nullptr)
         return;
     auto* reader = readerSource->getAudioFormatReader();
     if (reader == nullptr)
@@ -130,7 +124,7 @@ void PlayerAudio::save(const juce::File& file)
     currentPos = transportSource.getCurrentPosition();
     if (SaveList.find(file) != SaveList.end())
         SaveList.erase(file);
-	SaveList.insert(make_pair(file, currentPos));
+    SaveList.insert(std::make_pair(file, currentPos));
 }
 
 void PlayerAudio::setLooping(bool shouldLoop)
@@ -143,7 +137,6 @@ void PlayerAudio::setLooping(bool shouldLoop)
     }
 }
 
-
 void PlayerAudio::setABLoopPointA(double seconds)
 {
     double length = getLengthInSeconds();
@@ -151,10 +144,9 @@ void PlayerAudio::setABLoopPointA(double seconds)
     {
         abLoopPointA = juce::jlimit(0.0, length, seconds);
 
-        
         if (abLoopPointB >= 0 && abLoopPointB <= abLoopPointA)
         {
-            abLoopPointB = abLoopPointA + 1.0; 
+            abLoopPointB = abLoopPointA + 1.0;
             if (abLoopPointB > length)
                 abLoopPointB = length;
         }
@@ -168,10 +160,9 @@ void PlayerAudio::setABLoopPointB(double seconds)
     {
         abLoopPointB = juce::jlimit(0.0, length, seconds);
 
-        
         if (abLoopPointA >= 0 && abLoopPointA >= abLoopPointB)
         {
-            abLoopPointA = abLoopPointB - 1.0; 
+            abLoopPointA = abLoopPointB - 1.0;
             if (abLoopPointA < 0)
                 abLoopPointA = 0;
         }
@@ -233,41 +224,41 @@ void PlayerAudio::setSpeed(double speed)
     if (wasPlaying)
         transportSource.start();
 }
-juce::String PlayerAudio::getFileInfo() const
+
+void PlayerAudio::jumpForward(double seconds)
 {
-    if (readerSource == nullptr)
-        return "No file loaded.";
+    double currentPos = getCurrentPosition();
+    double newPos = currentPos + seconds;
+    double totalLength = getLengthInSeconds();
 
-    auto* reader = readerSource->getAudioFormatReader();
-    if (reader == nullptr)
-        return "No reader available.";
+    if (newPos > totalLength)
+        newPos = totalLength;
 
-    juce::String info;
-
-    
-    auto& meta = reader->metadataValues;
-    juce::String title = meta.getValue("title", "");
-    juce::String artist = meta.getValue("artist", "");
-
-    if (!title.isEmpty())  info += "Title: " + title + "\n";
-    if (!artist.isEmpty()) info += "Artist: " + artist + "\n";
-
-    
-    double duration = reader->lengthInSamples / reader->sampleRate;
-    info += "Duration: " + juce::String(duration, 2) + " sec\n";
-
-   
-    info += "File Format: " + reader->getFormatName();
-
-    return info;
+    setPosition(newPos);
 }
 
+void PlayerAudio::jumpBackward(double seconds)
+{
+    double currentPos = getCurrentPosition();
+    double newPos = currentPos - seconds;
+
+    if (newPos < 0.0)
+        newPos = 0.0;
+
+    setPosition(newPos);
+}
+
+juce::String PlayerAudio::getFileInfo() const
+{
+    if (currentFile.existsAsFile())
+        return currentFile.getFileName() + " (" + juce::String(totalLengthInSeconds, 1) + "s)";
+    return "No file loaded";
+}
 
 juce::String PlayerAudio::getSave() const
 {
     juce::String info;
-
-	info += " --Saved-- \n";
+    info += " --Saved-- \n";
 
     for (const auto& pair : SaveList)
     {
@@ -277,4 +268,3 @@ juce::String PlayerAudio::getSave() const
     }
     return info;
 }
-
