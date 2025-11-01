@@ -46,7 +46,7 @@ MainComponent::MainComponent()
         };
     addAndMakeVisible(guiPlayer2);
 
-    // إعداد خلاط الصوت الرئيسي
+
     addAndMakeVisible(masterVolumeSlider);
     masterVolumeSlider.setRange(0.0, 1.0, 0.01);
     masterVolumeSlider.setValue(0.7);
@@ -136,3 +136,4 @@ void MainComponent::resized()
     guiPlayer1.setBounds(area.removeFromLeft(halfWidth));
     guiPlayer2.setBounds(area);
 }
+
