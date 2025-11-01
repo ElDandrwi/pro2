@@ -18,8 +18,16 @@ public:
     void resized() override;
 
 private:
-    PlayerAudio audioPlayer;
-    PlayerGUI   guiPlayer;
+    PlayerAudio audioPlayer1;
+    PlayerAudio audioPlayer2;
+    PlayerGUI   guiPlayer1;
+    PlayerGUI   guiPlayer2;
+
+    juce::Slider masterVolumeSlider;
+    juce::Label masterVolumeLabel;
+
+    juce::Slider balanceSlider;
+    juce::Label balanceLabel;
 
     std::unique_ptr<juce::FileChooser> fileChooser;
 
