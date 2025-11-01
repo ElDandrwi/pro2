@@ -19,16 +19,17 @@ public:
 
     void loadFileForWaveform(const juce::File& file);
 
-	void updateFileInfoLabel(const juce::String& text)
+    void updateFileInfoLabel(const juce::String& text)
     {
         fileInfoLabel.setText(text, juce::dontSendNotification);
     }
-    std::function<void()> onLoadFileRequest;
 
     void updateSaveLabel(const juce::String& text)
     {
         SaveLabel.setText(text, juce::dontSendNotification);
     }
+
+    std::function<void()> onLoadFileRequest;
 
 private:
     struct WaveformDisplay : public juce::Component, public juce::ChangeListener
@@ -87,17 +88,19 @@ private:
     juce::TextButton gotoStartButton{ "Start" };
     juce::TextButton gotoEndButton{ "End" };
     juce::TextButton loopButton{ "Loop: Off" };
-    juce::TextButton setAButton{ "A" };
-    juce::TextButton setBButton{ "B" };
+    juce::TextButton setAButton{ "From" };
+    juce::TextButton setBButton{ "To" };
     juce::TextButton clearABButton{ "Clear" };
-    juce::TextButton abLoopButton{ "A-B Loop: Off" };
-	juce::Slider speedSlider;
+    juce::TextButton abLoopButton{ "Custom Loop: Off" };
+    juce::TextButton jumpBackButton{ "- 10s" };
+    juce::TextButton jumpForwardButton{ "+ 10s" };
+    juce::Slider speedSlider;
     juce::Slider volumeSlider;
     juce::Slider positionSlider;
     juce::Label timeLabel;
     juce::Label abLoopLabel;
-	juce::Label fileInfoLabel;
-	juce::Label SaveLabel;
+    juce::Label fileInfoLabel;
+    juce::Label SaveLabel;
 
     PlayerAudio* audioPlayer = nullptr;
 
@@ -117,9 +120,3 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
-
-
-
-
-
-
