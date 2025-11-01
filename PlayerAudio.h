@@ -2,7 +2,6 @@
 
 #include <JuceHeader.h>
 #include <map>
-using namespace std;
 
 class PlayerAudio : public juce::AudioSource
 {
@@ -22,12 +21,12 @@ public:
     double getLengthInSeconds() const;
     void goToStart();
     void goToEnd();
-	void save(const juce::File& file);
+    void save(const juce::File& file);
 
     void setLooping(bool shouldLoop);
     bool isLooping() const { return isLoopEnabled; }
 
-  	void setSpeed(double speed);
+    void setSpeed(double speed);
 
     void setABLoopPointA(double seconds);
     void setABLoopPointB(double seconds);
@@ -40,6 +39,10 @@ public:
 
     double getCurrentPosition() const;
     double getPositionRatio() const;
+
+    void jumpForward(double seconds);
+    void jumpBackward(double seconds);
+
     juce::String getFileInfo() const;
     juce::String getSave() const;
 
@@ -53,13 +56,9 @@ private:
     double abLoopPointA = -1.0;
     double abLoopPointB = -1.0;
     double totalLengthInSeconds = 0.0;
-	double currentPos = 0.0;
+    double currentPos = 0.0;
     juce::File currentFile;
-	map<juce::File,double> SaveList;
-	double previoustime = 0.0;
+    std::map<juce::File, double> SaveList;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerAudio)
 };
-
-
-
