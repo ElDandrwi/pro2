@@ -23,12 +23,12 @@ public:
     {
         fileInfoLabel.setText(text, juce::dontSendNotification);
     }
-
+/*
     void updateSaveLabel(const juce::String& text)
     {
         SaveLabel.setText(text, juce::dontSendNotification);
     }
-
+*/
     std::function<void()> onLoadFileRequest;
 
 private:
@@ -82,7 +82,7 @@ private:
     };
 
     juce::TextButton loadButton{ "Load Files" };
-    juce::TextButton muteButton{ "Mute" };
+    juce::ImageButton muteButton;
     juce::TextButton playButton{ "Play" };
     juce::TextButton pauseButton{ "Pause" };
     juce::TextButton gotoStartButton{ "Start" };
@@ -94,9 +94,14 @@ private:
     juce::TextButton abLoopButton{ "Custom Loop: Off" };
     juce::TextButton jumpBackButton{ "- 10s" };
     juce::TextButton jumpForwardButton{ "+ 10s" };
+
+	juce::Image muteImage{ juce::ImageCache::getFromMemory(BinaryData::mute_png, BinaryData::mute_pngSize) };
+	juce::Image unmuteImage{ juce::ImageCache::getFromMemory(BinaryData::unmute_png, BinaryData::unmute_pngSize) };
+
     juce::Slider speedSlider;
     juce::Slider volumeSlider;
     juce::Slider positionSlider;
+
     juce::Label timeLabel;
     juce::Label abLoopLabel;
     juce::Label fileInfoLabel;
@@ -120,3 +125,4 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
+
