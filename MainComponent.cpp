@@ -89,6 +89,12 @@ MainComponent::MainComponent()
 {
     audioPlayer.playTrack(index);
 };
+	guiPlayer.onClearPlaylistRequest = [this]()
+{
+    audioPlayer.clearPlaylist();
+    guiPlayer.updatePlaylistDisplay(audioPlayer.getPlaylist());
+};
+
 }
 
 MainComponent::~MainComponent()
@@ -161,6 +167,7 @@ void MainComponent::resized()
     guiPlayer1.setBounds(area.removeFromLeft(halfWidth));
     guiPlayer2.setBounds(area);
 }
+
 
 
 
