@@ -73,10 +73,17 @@ playlistBox.setRowHeight(25);
     fileInfoLabel.setJustificationType(juce::Justification::centredLeft);
     fileInfoLabel.setFont(juce::Font(13.0f));
     fileInfoLabel.setColour(juce::Label::textColourId, juce::Colours::white);
+	playlistBox.setModel(&playlistModel);
 
     //SaveLabel.setText(" --SAVE-- \n", juce::dontSendNotification);
 
     startTimer(50);
+	playlistModel.onItemClicked = [this](int index)
+{
+    if (onTrackSelected)
+        onTrackSelected(index);
+};
+
 }
 
 PlayerGUI::~PlayerGUI()
@@ -362,9 +369,10 @@ void PlayerGUI::loadFileForWaveform(const juce::File& file)
 }
 void PlayerGUI::updatePlaylistDisplay(const std::vector<juce::File>& files)
 {
-    playlistNames.clear();
+    playlistModel.items.clear();
+
     for (auto& f : files)
-        playlistNames.push_back(f.getFileName());
+        playlistModel.items.push_back(f.getFileName());
 
     playlistBox.updateContent();
     repaint();
