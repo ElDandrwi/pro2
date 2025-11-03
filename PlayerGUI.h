@@ -84,6 +84,33 @@ private:
         }
     };
 
+class PlaylistModel : public juce::ListBoxModel
+{
+public:
+    std::vector<juce::String> items;
+    std::function<void(int)> onItemClicked;
+
+    int getNumRows() override { return (int)items.size(); }
+
+    void paintListBoxItem(int rowNumber, juce::Graphics& g,
+                          int width, int height, bool rowIsSelected) override
+    {
+        if (rowIsSelected)
+            g.fillAll(juce::Colours::lightblue);
+        else
+            g.fillAll(juce::Colours::darkgrey);
+
+        g.setColour(juce::Colours::white);
+        g.drawText(items[rowNumber], 5, 0, width - 10, height, juce::Justification::centredLeft);
+    }
+
+    void listBoxItemClicked(int row, const juce::MouseEvent&) override
+    {
+        if (onItemClicked)
+            onItemClicked(row);
+    }
+};
+PlaylistModel playlistModel;
     juce::TextButton loadButton{ "Load Files" };
     juce::ImageButton muteButton;
     juce::TextButton playButton{ "Play" };
@@ -130,6 +157,7 @@ std::vector<juce::String> playlistNames;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
+
 
 
 
