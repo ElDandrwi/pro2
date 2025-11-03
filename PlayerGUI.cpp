@@ -4,14 +4,14 @@ PlayerGUI::PlayerGUI()
 {
     formatManager.registerBasicFormats();
 
-    
+
     muteButton.setImages(false, true, true,
         unmuteImage, 1.0f, juce::Colours::transparentBlack,
         unmuteImage, 1.0f, juce::Colours::lightgrey,
-		unmuteImage, 1.0f, juce::Colours::grey);
+        unmuteImage, 1.0f, juce::Colours::grey);
     addAndMakeVisible(muteButton);
     muteButton.addListener(this);
-    
+
     addAndMakeVisible(loadButton);
     addAndMakeVisible(playButton);
     addAndMakeVisible(pauseButton);
@@ -32,13 +32,13 @@ PlayerGUI::PlayerGUI()
     addAndMakeVisible(waveformDisplay);
     addAndMakeVisible(fileInfoLabel);
     //addAndMakeVisible(SaveLabel);
-addAndMakeVisible(addToPlaylistButton);
-addToPlaylistButton.addListener(this);
+    addAndMakeVisible(addToPlaylistButton);
+    addToPlaylistButton.addListener(this);
 
-addAndMakeVisible(playlistBox);
-playlistBox.setRowHeight(25);
-	addAndMakeVisible(clearPlaylistButton);
-clearPlaylistButton.addListener(this);
+    addAndMakeVisible(playlistBox);
+    playlistBox.setRowHeight(25);
+    addAndMakeVisible(clearPlaylistButton);
+    clearPlaylistButton.addListener(this);
 
     loadButton.addListener(this);
     playButton.addListener(this);
@@ -76,16 +76,16 @@ clearPlaylistButton.addListener(this);
     fileInfoLabel.setJustificationType(juce::Justification::centredLeft);
     fileInfoLabel.setFont(juce::Font(13.0f));
     fileInfoLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-	playlistBox.setModel(&playlistModel);
+    playlistBox.setModel(&playlistModel);
 
     //SaveLabel.setText(" --SAVE-- \n", juce::dontSendNotification);
 
     startTimer(50);
-	playlistModel.onItemClicked = [this](int index)
-{
-    if (onTrackSelected)
-        onTrackSelected(index);
-};
+    playlistModel.onItemClicked = [this](int index)
+        {
+            if (onTrackSelected)
+                onTrackSelected(index);
+        };
 
 }
 
@@ -150,10 +150,7 @@ void PlayerGUI::resized()
     waveformDisplay.setBounds(area.removeFromTop(100));
     area.removeFromTop(10);
     fileInfoLabel.setBounds(area);
-	playlistBox.setBounds(20, 450, getWidth() - 40, 100);
-addToPlaylistButton.setBounds(20, 560, 150, 30);
-	addToPlaylistButton.setBounds(20, 560, 150, 30);
-clearPlaylistButton.setBounds(180, 560, 150, 30);
+
 
 }
 
@@ -267,9 +264,9 @@ void PlayerGUI::buttonClicked(juce::Button* button)
             }
 
             if (newABLoopState)
-                abLoopButton.setButtonText("Custom Loop: On");  
+                abLoopButton.setButtonText("Custom Loop: On");
             else
-                abLoopButton.setButtonText("Custom Loop: Off"); 
+                abLoopButton.setButtonText("Custom Loop: Off");
         }
     }
     else if (button == &jumpBackButton)
@@ -282,16 +279,16 @@ void PlayerGUI::buttonClicked(juce::Button* button)
         if (audioPlayer)
             audioPlayer->jumpForward(10.0);
     }
-	else if (button == &addToPlaylistButton)
-{
-    if (onAddToPlaylistRequest)
-        onAddToPlaylistRequest();
-}
-	else if (button == &clearPlaylistButton)
-{
-    if (onClearPlaylistRequest)
-        onClearPlaylistRequest();
-}
+    else if (button == &addToPlaylistButton)
+    {
+        if (onAddToPlaylistRequest)
+            onAddToPlaylistRequest();
+    }
+    else if (button == &clearPlaylistButton)
+    {
+        if (onClearPlaylistRequest)
+            onClearPlaylistRequest();
+    }
 
 }
 
@@ -389,7 +386,6 @@ void PlayerGUI::updatePlaylistDisplay(const std::vector<juce::File>& files)
     playlistBox.updateContent();
     repaint();
 }
-
 
 
 
