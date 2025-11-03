@@ -23,6 +23,9 @@ public:
     {
         fileInfoLabel.setText(text, juce::dontSendNotification);
     }
+void updatePlaylistDisplay(const std::vector<juce::File>& files);
+std::function<void()> onAddToPlaylistRequest;
+std::function<void(int)> onTrackSelected;
 /*
     void updateSaveLabel(const juce::String& text)
     {
@@ -97,7 +100,9 @@ private:
 
 	juce::Image muteImage{ juce::ImageCache::getFromMemory(BinaryData::mute_png, BinaryData::mute_pngSize) };
 	juce::Image unmuteImage{ juce::ImageCache::getFromMemory(BinaryData::unmute_png, BinaryData::unmute_pngSize) };
-
+juce::ListBox playlistBox;
+juce::TextButton addToPlaylistButton{ "Add to Playlist" };
+std::vector<juce::String> playlistNames;
     juce::Slider speedSlider;
     juce::Slider volumeSlider;
     juce::Slider positionSlider;
@@ -125,5 +130,6 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
+
 
 
