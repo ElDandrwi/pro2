@@ -254,6 +254,11 @@ juce::String PlayerAudio::getFileInfo() const
         return currentFile.getFileName() + " (" + juce::String(totalLengthInSeconds, 1) + "s)";
     return "No file loaded";
 }
+void PlayerAudio::clearPlaylist()
+{
+	playlist.clear();
+	currentTrackIndex = -1;
+}
 void PlayerAudio::addFileToPlaylist(const juce::File& file)
 {
     if (file.existsAsFile())
@@ -289,6 +294,11 @@ void PlayerAudio::playPreviousTrack()
     }
 }
 
+bool PlayerAudio::isPlaying() const
+{
+	return  transportSource.isPlaying();
+}
+
 /*
 juce::String PlayerAudio::getSave() const
 {
@@ -304,4 +314,3 @@ juce::String PlayerAudio::getSave() const
     return info;
 }
 */
-
