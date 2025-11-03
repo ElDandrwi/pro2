@@ -33,6 +33,8 @@ std::function<void(int)> onTrackSelected;
     }
 */
     std::function<void()> onLoadFileRequest;
+std::function<void()> onClearPlaylistRequest;
+
 
 private:
     struct WaveformDisplay : public juce::Component, public juce::ChangeListener
@@ -124,6 +126,7 @@ PlaylistModel playlistModel;
     juce::TextButton abLoopButton{ "Custom Loop: Off" };
     juce::TextButton jumpBackButton{ "- 10s" };
     juce::TextButton jumpForwardButton{ "+ 10s" };
+juce::TextButton clearPlaylistButton{ "Clear Playlist" };
 
 	juce::Image muteImage{ juce::ImageCache::getFromMemory(BinaryData::mute_png, BinaryData::mute_pngSize) };
 	juce::Image unmuteImage{ juce::ImageCache::getFromMemory(BinaryData::unmute_png, BinaryData::unmute_pngSize) };
@@ -157,6 +160,7 @@ std::vector<juce::String> playlistNames;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
+
 
 
 
