@@ -85,6 +85,10 @@ MainComponent::MainComponent()
             guiPlayer.updatePlaylistDisplay(audioPlayer.getPlaylist());
         });
 };
+	guiPlayer.onTrackSelected = [this](int index)
+{
+    audioPlayer.playTrack(index);
+};
 }
 
 MainComponent::~MainComponent()
@@ -157,6 +161,7 @@ void MainComponent::resized()
     guiPlayer1.setBounds(area.removeFromLeft(halfWidth));
     guiPlayer2.setBounds(area);
 }
+
 
 
 
