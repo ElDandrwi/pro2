@@ -11,10 +11,10 @@ public:
     void paint(juce::Graphics&) override;
     void resized() override;
 
-    // · ÕœÌÀ ⁄—÷ «·„·›« 
+   
     void updatePlaylistDisplay(const std::vector<juce::File>& newPlaylist);
 
-    // === Callbacks ===
+   
     std::function<void()> onAddToPlaylistRequest;
     std::function<void()> onClearPlaylistRequest;
     std::function<void(int)> onTrackSelected;
@@ -26,8 +26,9 @@ private:
 
     std::vector<juce::File> playlist;
 
-    // „‰ ListBoxModel
+    // √£√§ ListBoxModel
     int getNumRows() override;
     void paintListBoxItem(int row, juce::Graphics&, int width, int height, bool rowIsSelected) override;
     void listBoxItemClicked(int row, const juce::MouseEvent&) override;
 };
+
