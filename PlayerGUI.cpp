@@ -32,7 +32,11 @@ PlayerGUI::PlayerGUI()
     addAndMakeVisible(waveformDisplay);
     addAndMakeVisible(fileInfoLabel);
     //addAndMakeVisible(SaveLabel);
+addAndMakeVisible(addToPlaylistButton);
+addToPlaylistButton.addListener(this);
 
+addAndMakeVisible(playlistBox);
+playlistBox.setRowHeight(25);
     loadButton.addListener(this);
     playButton.addListener(this);
     pauseButton.addListener(this);
@@ -136,6 +140,8 @@ void PlayerGUI::resized()
     waveformDisplay.setBounds(area.removeFromTop(100));
     area.removeFromTop(10);
     fileInfoLabel.setBounds(area);
+	playlistBox.setBounds(20, 450, getWidth() - 40, 100);
+addToPlaylistButton.setBounds(20, 560, 150, 30);
 }
 
 void PlayerGUI::buttonClicked(juce::Button* button)
@@ -263,6 +269,11 @@ void PlayerGUI::buttonClicked(juce::Button* button)
         if (audioPlayer)
             audioPlayer->jumpForward(10.0);
     }
+	else if (button == &addToPlaylistButton)
+{
+    if (onAddToPlaylistRequest)
+        onAddToPlaylistRequest();
+}
 }
 
 void PlayerGUI::sliderValueChanged(juce::Slider* slider)
@@ -349,4 +360,15 @@ void PlayerGUI::loadFileForWaveform(const juce::File& file)
     thumbnail.setSource(new juce::FileInputSource(file));
     waveformDisplay.repaint();
 }
+void PlayerGUI::updatePlaylistDisplay(const std::vector<juce::File>& files)
+{
+    playlistNames.clear();
+    for (auto& f : files)
+        playlistNames.push_back(f.getFileName());
+
+    playlistBox.updateContent();
+    repaint();
+}
+
+
 
