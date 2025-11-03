@@ -44,7 +44,7 @@ public:
     void jumpBackward(double seconds);
 
     juce::String getFileInfo() const;
-    juce::String getSave() const;
+    //juce::String getSave() const;
 
 private:
     juce::AudioFormatManager formatManager;
@@ -62,3 +62,4 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerAudio)
 };
+
