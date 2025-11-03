@@ -22,6 +22,8 @@ private:
     PlayerAudio audioPlayer2;
     PlayerGUI   guiPlayer1;
     PlayerGUI   guiPlayer2;
+PlayerAudio audioPlayer;
+PlayerGUI guiPlayer;
 
     juce::Slider masterVolumeSlider;
     juce::Label masterVolumeLabel;
@@ -33,3 +35,4 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };
+
