@@ -42,15 +42,16 @@ public:
 
     void jumpForward(double seconds);
     void jumpBackward(double seconds);
-void addFileToPlaylist(const juce::File& file);
-void playTrack(int index);
-void playNextTrack();
-void playPreviousTrack();
-std::vector<juce::File> getPlaylist() const { return playlist; }
+    void addFileToPlaylist(const juce::File& file);
+    void playTrack(int index);
+    void playNextTrack();
+    void playPreviousTrack();
+    bool isPlaying() const;
+    std::vector<juce::File> getPlaylist() const { return playlist; }
 
     juce::String getFileInfo() const;
     //juce::String getSave() const;
-void clearPlaylist();
+    void clearPlaylist();
 
 private:
     juce::AudioFormatManager formatManager;
@@ -65,11 +66,10 @@ private:
     double currentPos = 0.0;
     juce::File currentFile;
     std::map<juce::File, double> SaveList;
-std::vector<juce::File> playlist;
-int currentTrackIndex = -1;
+    std::vector<juce::File> playlist;
+    int currentTrackIndex = -1;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerAudio)
 };
-
 
 
