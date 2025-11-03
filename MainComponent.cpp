@@ -19,6 +19,7 @@ MainComponent::MainComponent()
                     {
                         audioPlayer1.loadFile(file);
                         guiPlayer1.loadFileForWaveform(file);
+						guiPlayer1.updateFileInfoLabel(audioPlayer1.getFileInfo());
                     }
                 });
         };
@@ -41,6 +42,7 @@ MainComponent::MainComponent()
                     {
                         audioPlayer2.loadFile(file);
                         guiPlayer2.loadFileForWaveform(file);
+						guiPlayer2.updateFileInfoLabel(audioPlayer2.getFileInfo());
                     }
                 });
         };
@@ -136,4 +138,5 @@ void MainComponent::resized()
     guiPlayer1.setBounds(area.removeFromLeft(halfWidth));
     guiPlayer2.setBounds(area);
 }
+
 
