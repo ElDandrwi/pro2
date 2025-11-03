@@ -45,6 +45,7 @@ MainComponent::MainComponent()
 						guiPlayer2.updateFileInfoLabel(audioPlayer2.getFileInfo());
                     }
                 });
+			
         };
     addAndMakeVisible(guiPlayer2);
 
@@ -66,6 +67,24 @@ MainComponent::MainComponent()
     balanceLabel.setText("Balance", juce::dontSendNotification);
 
     setAudioChannels(0, 2);
+	guiPlayer.onAddToPlaylistRequest = [this]()
+{
+    fileChooser = std::make_unique<juce::FileChooser>(
+        "Select audio files...",
+        juce::File{},
+        "*.wav;*.mp3");
+
+    fileChooser->launchAsync(
+        juce::FileBrowserComponent::openMode | juce::FileBrowserComponent::canSelectMultipleItems,
+        [this](const juce::FileChooser& fc)
+        {
+            juce::Array<juce::File> chosen = fc.getResults();
+            for (auto& file : chosen)
+                audioPlayer.addFileToPlaylist(file);
+
+            guiPlayer.updatePlaylistDisplay(audioPlayer.getPlaylist());
+        });
+};
 }
 
 MainComponent::~MainComponent()
@@ -138,5 +157,6 @@ void MainComponent::resized()
     guiPlayer1.setBounds(area.removeFromLeft(halfWidth));
     guiPlayer2.setBounds(area);
 }
+
 
 
