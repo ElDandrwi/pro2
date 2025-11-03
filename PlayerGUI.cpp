@@ -3,8 +3,16 @@
 PlayerGUI::PlayerGUI()
 {
     formatManager.registerBasicFormats();
-    addAndMakeVisible(loadButton);
+
+    
+    muteButton.setImages(false, true, true,
+        unmuteImage, 1.0f, juce::Colours::transparentBlack,
+        unmuteImage, 1.0f, juce::Colours::lightgrey,
+		unmuteImage, 1.0f, juce::Colours::grey);
     addAndMakeVisible(muteButton);
+    muteButton.addListener(this);
+    
+    addAndMakeVisible(loadButton);
     addAndMakeVisible(playButton);
     addAndMakeVisible(pauseButton);
     addAndMakeVisible(gotoStartButton);
@@ -23,10 +31,9 @@ PlayerGUI::PlayerGUI()
     addAndMakeVisible(abLoopLabel);
     addAndMakeVisible(waveformDisplay);
     addAndMakeVisible(fileInfoLabel);
-    addAndMakeVisible(SaveLabel);
+    //addAndMakeVisible(SaveLabel);
 
     loadButton.addListener(this);
-    muteButton.addListener(this);
     playButton.addListener(this);
     pauseButton.addListener(this);
     gotoStartButton.addListener(this);
@@ -63,7 +70,7 @@ PlayerGUI::PlayerGUI()
     fileInfoLabel.setFont(juce::Font(13.0f));
     fileInfoLabel.setColour(juce::Label::textColourId, juce::Colours::white);
 
-    SaveLabel.setText(" --SAVE-- \n", juce::dontSendNotification);
+    //SaveLabel.setText(" --SAVE-- \n", juce::dontSendNotification);
 
     startTimer(50);
 }
@@ -144,13 +151,19 @@ void PlayerGUI::buttonClicked(juce::Button* button)
             if (isMuted) {
                 volumeSlider.setValue(BeforeMute);
                 isMuted = false;
-                muteButton.setButtonText("Mute");
+                muteButton.setImages(false, true, true,
+                    unmuteImage, 1.0f, juce::Colours::transparentBlack,
+                    unmuteImage, 1.0f, juce::Colours::lightgrey,
+                    unmuteImage, 1.0f, juce::Colours::grey);
             }
             else {
                 BeforeMute = (float)volumeSlider.getValue();
                 volumeSlider.setValue(0.0);
                 isMuted = true;
-                muteButton.setButtonText("Unmute");
+                muteButton.setImages(false, true, true,
+                    muteImage, 1.0f, juce::Colours::transparentBlack,
+                    muteImage, 1.0f, juce::Colours::lightgrey,
+                    muteImage, 1.0f, juce::Colours::grey);
             }
         }
     }
@@ -336,3 +349,4 @@ void PlayerGUI::loadFileForWaveform(const juce::File& file)
     thumbnail.setSource(new juce::FileInputSource(file));
     waveformDisplay.repaint();
 }
+
