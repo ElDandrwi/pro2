@@ -254,6 +254,41 @@ juce::String PlayerAudio::getFileInfo() const
         return currentFile.getFileName() + " (" + juce::String(totalLengthInSeconds, 1) + "s)";
     return "No file loaded";
 }
+void PlayerAudio::addFileToPlaylist(const juce::File& file)
+{
+    if (file.existsAsFile())
+        playlist.push_back(file);
+}
+
+void PlayerAudio::playTrack(int index)
+{
+    if (index >= 0 && index < (int)playlist.size())
+    {
+        currentTrackIndex = index;
+        loadFile(playlist[index]);
+    }
+}
+
+void PlayerAudio::playNextTrack()
+{
+    if (!playlist.empty())
+    {
+        currentTrackIndex = (currentTrackIndex + 1) % playlist.size();
+        playTrack(currentTrackIndex);
+    }
+}
+
+void PlayerAudio::playPreviousTrack()
+{
+    if (!playlist.empty())
+    {
+        currentTrackIndex--;
+        if (currentTrackIndex < 0)
+            currentTrackIndex = (int)playlist.size() - 1;
+        playTrack(currentTrackIndex);
+    }
+}
+
 /*
 juce::String PlayerAudio::getSave() const
 {
@@ -269,3 +304,4 @@ juce::String PlayerAudio::getSave() const
     return info;
 }
 */
+
