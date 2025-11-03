@@ -23,17 +23,17 @@ public:
     {
         fileInfoLabel.setText(text, juce::dontSendNotification);
     }
-void updatePlaylistDisplay(const std::vector<juce::File>& files);
-std::function<void()> onAddToPlaylistRequest;
-std::function<void(int)> onTrackSelected;
-/*
-    void updateSaveLabel(const juce::String& text)
-    {
-        SaveLabel.setText(text, juce::dontSendNotification);
-    }
-*/
+    void updatePlaylistDisplay(const std::vector<juce::File>& files);
+    std::function<void()> onAddToPlaylistRequest;
+    std::function<void(int)> onTrackSelected;
+    /*
+        void updateSaveLabel(const juce::String& text)
+        {
+            SaveLabel.setText(text, juce::dontSendNotification);
+        }
+    */
     std::function<void()> onLoadFileRequest;
-std::function<void()> onClearPlaylistRequest;
+    std::function<void()> onClearPlaylistRequest;
 
 
 private:
@@ -86,33 +86,33 @@ private:
         }
     };
 
-class PlaylistModel : public juce::ListBoxModel
-{
-public:
-    std::vector<juce::String> items;
-    std::function<void(int)> onItemClicked;
-
-    int getNumRows() override { return (int)items.size(); }
-
-    void paintListBoxItem(int rowNumber, juce::Graphics& g,
-                          int width, int height, bool rowIsSelected) override
+    class PlaylistModel : public juce::ListBoxModel
     {
-        if (rowIsSelected)
-            g.fillAll(juce::Colours::lightblue);
-        else
-            g.fillAll(juce::Colours::darkgrey);
+    public:
+        std::vector<juce::String> items;
+        std::function<void(int)> onItemClicked;
 
-        g.setColour(juce::Colours::white);
-        g.drawText(items[rowNumber], 5, 0, width - 10, height, juce::Justification::centredLeft);
-    }
+        int getNumRows() override { return (int)items.size(); }
 
-    void listBoxItemClicked(int row, const juce::MouseEvent&) override
-    {
-        if (onItemClicked)
-            onItemClicked(row);
-    }
-};
-PlaylistModel playlistModel;
+        void paintListBoxItem(int rowNumber, juce::Graphics& g,
+            int width, int height, bool rowIsSelected) override
+        {
+            if (rowIsSelected)
+                g.fillAll(juce::Colours::lightblue);
+            else
+                g.fillAll(juce::Colours::darkgrey);
+
+            g.setColour(juce::Colours::white);
+            g.drawText(items[rowNumber], 5, 0, width - 10, height, juce::Justification::centredLeft);
+        }
+
+        void listBoxItemClicked(int row, const juce::MouseEvent&) override
+        {
+            if (onItemClicked)
+                onItemClicked(row);
+        }
+    };
+    PlaylistModel playlistModel;
     juce::TextButton loadButton{ "Load Files" };
     juce::ImageButton muteButton;
     juce::TextButton playButton{ "Play" };
@@ -126,13 +126,15 @@ PlaylistModel playlistModel;
     juce::TextButton abLoopButton{ "Custom Loop: Off" };
     juce::TextButton jumpBackButton{ "- 10s" };
     juce::TextButton jumpForwardButton{ "+ 10s" };
-juce::TextButton clearPlaylistButton{ "Clear Playlist" };
+    juce::TextButton clearPlaylistButton{ "Clear Playlist" };
 
-	juce::Image muteImage{ juce::ImageCache::getFromMemory(BinaryData::mute_png, BinaryData::mute_pngSize) };
-	juce::Image unmuteImage{ juce::ImageCache::getFromMemory(BinaryData::unmute_png, BinaryData::unmute_pngSize) };
-juce::ListBox playlistBox;
-juce::TextButton addToPlaylistButton{ "Add to Playlist" };
-std::vector<juce::String> playlistNames;
+
+    juce::Image muteImage{ juce::ImageCache::getFromMemory(BinaryData::mute_png, BinaryData::mute_pngSize) };
+    juce::Image unmuteImage{ juce::ImageCache::getFromMemory(BinaryData::unmute_png, BinaryData::unmute_pngSize) };
+
+    juce::ListBox playlistBox;
+    juce::TextButton addToPlaylistButton{ "Add to Playlist" };
+    std::vector<juce::String> playlistNames;
     juce::Slider speedSlider;
     juce::Slider volumeSlider;
     juce::Slider positionSlider;
@@ -160,7 +162,6 @@ std::vector<juce::String> playlistNames;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
-
 
 
 
