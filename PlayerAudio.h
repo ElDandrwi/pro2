@@ -50,6 +50,7 @@ std::vector<juce::File> getPlaylist() const { return playlist; }
 
     juce::String getFileInfo() const;
     //juce::String getSave() const;
+void clearPlaylist();
 
 private:
     juce::AudioFormatManager formatManager;
@@ -69,5 +70,6 @@ int currentTrackIndex = -1;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerAudio)
 };
+
 
 
