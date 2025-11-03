@@ -254,7 +254,7 @@ juce::String PlayerAudio::getFileInfo() const
         return currentFile.getFileName() + " (" + juce::String(totalLengthInSeconds, 1) + "s)";
     return "No file loaded";
 }
-
+/*
 juce::String PlayerAudio::getSave() const
 {
     juce::String info;
@@ -268,3 +268,4 @@ juce::String PlayerAudio::getSave() const
     }
     return info;
 }
+*/
