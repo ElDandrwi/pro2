@@ -37,6 +37,9 @@ addToPlaylistButton.addListener(this);
 
 addAndMakeVisible(playlistBox);
 playlistBox.setRowHeight(25);
+	addAndMakeVisible(clearPlaylistButton);
+clearPlaylistButton.addListener(this);
+
     loadButton.addListener(this);
     playButton.addListener(this);
     pauseButton.addListener(this);
@@ -149,6 +152,9 @@ void PlayerGUI::resized()
     fileInfoLabel.setBounds(area);
 	playlistBox.setBounds(20, 450, getWidth() - 40, 100);
 addToPlaylistButton.setBounds(20, 560, 150, 30);
+	addToPlaylistButton.setBounds(20, 560, 150, 30);
+clearPlaylistButton.setBounds(180, 560, 150, 30);
+
 }
 
 void PlayerGUI::buttonClicked(juce::Button* button)
@@ -281,6 +287,12 @@ void PlayerGUI::buttonClicked(juce::Button* button)
     if (onAddToPlaylistRequest)
         onAddToPlaylistRequest();
 }
+	else if (button == &clearPlaylistButton)
+{
+    if (onClearPlaylistRequest)
+        onClearPlaylistRequest();
+}
+
 }
 
 void PlayerGUI::sliderValueChanged(juce::Slider* slider)
@@ -377,6 +389,7 @@ void PlayerGUI::updatePlaylistDisplay(const std::vector<juce::File>& files)
     playlistBox.updateContent();
     repaint();
 }
+
 
 
 
