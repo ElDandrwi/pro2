@@ -105,7 +105,7 @@ private:
     juce::Label timeLabel;
     juce::Label abLoopLabel;
     juce::Label fileInfoLabel;
-    juce::Label SaveLabel;
+    //juce::Label SaveLabel;
 
     PlayerAudio* audioPlayer = nullptr;
 
@@ -125,4 +125,5 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
+
 
