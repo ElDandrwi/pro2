@@ -26,9 +26,10 @@ private:
 
     std::vector<juce::File> playlist;
 
-    // ãä ListBoxModel
+    
     int getNumRows() override;
     void paintListBoxItem(int row, juce::Graphics&, int width, int height, bool rowIsSelected) override;
     void listBoxItemClicked(int row, const juce::MouseEvent&) override;
 };
+
 
