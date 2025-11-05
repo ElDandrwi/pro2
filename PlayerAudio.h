@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include <JuceHeader.h>
@@ -50,7 +51,6 @@ public:
     std::vector<juce::File> getPlaylist() const { return playlist; }
 
     juce::String getFileInfo() const;
-    //juce::String getSave() const;
     void clearPlaylist();
 
 private:
