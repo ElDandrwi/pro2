@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include <JuceHeader.h>
@@ -19,17 +20,17 @@ public:
     void resized() override;
 
 private:
-    
+
     PlayerAudio audioPlayer1;
     PlayerAudio audioPlayer2;
     PlayerGUI   guiPlayer1;
     PlayerGUI   guiPlayer2;
 
-   
+
     PlayerAudio audioPlayer;
     PlaylistGUI playlistGUI;
 
-   
+
     juce::Slider masterVolumeSlider;
     juce::Label  masterVolumeLabel;
     juce::Slider balanceSlider;
