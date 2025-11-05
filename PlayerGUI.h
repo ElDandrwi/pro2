@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include <JuceHeader.h>
@@ -26,12 +27,6 @@ public:
     void updatePlaylistDisplay(const std::vector<juce::File>& files);
     std::function<void()> onAddToPlaylistRequest;
     std::function<void(int)> onTrackSelected;
-    /*
-        void updateSaveLabel(const juce::String& text)
-        {
-            SaveLabel.setText(text, juce::dontSendNotification);
-        }
-    */
     std::function<void()> onLoadFileRequest;
     std::function<void()> onClearPlaylistRequest;
 
@@ -152,7 +147,6 @@ private:
     juce::Label timeLabel;
     juce::Label abLoopLabel;
     juce::Label fileInfoLabel;
-    //juce::Label SaveLabel;
 
     PlayerAudio* audioPlayer = nullptr;
 
