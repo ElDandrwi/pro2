@@ -50,8 +50,6 @@ MainComponent::MainComponent()
                 });
         };
     addAndMakeVisible(guiPlayer2);
-
--
     addAndMakeVisible(playlistGUI);
     playlistGUI.onAddToPlaylistRequest = [this]()
         {
