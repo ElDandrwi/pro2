@@ -12,18 +12,79 @@ PlayerGUI::PlayerGUI()
     addAndMakeVisible(muteButton);
     muteButton.addListener(this);
 
+    loadButton.setImages(false, true, true,
+        loadImage, 1.0f, juce::Colours::transparentBlack,
+        loadImage, 1.0f, juce::Colours::lightgrey,
+        loadImage, 1.0f, juce::Colours::grey);    
     addAndMakeVisible(loadButton);
+    loadButton.addListener(this);
+
+    playButton.setImages(false, true, true,
+        playImage, 1.0f, juce::Colours::transparentBlack,
+        playImage, 1.0f, juce::Colours::lightgrey,
+        playImage, 1.0f, juce::Colours::grey);
     addAndMakeVisible(playButton);
+    playButton.addListener(this);
+
+    pauseButton.setImages(false, true, true,
+        pauseImage, 1.0f, juce::Colours::transparentBlack,
+        pauseImage, 1.0f, juce::Colours::lightgrey,
+        pauseImage, 1.0f, juce::Colours::grey);
     addAndMakeVisible(pauseButton);
+    pauseButton.addListener(this);
+
+    gotoStartButton.setImages(false, true, true,
+        startImage, 1.0f, juce::Colours::transparentBlack,
+        startImage, 1.0f, juce::Colours::lightgrey,
+        startImage, 1.0f, juce::Colours::grey);
     addAndMakeVisible(gotoStartButton);
+    gotoStartButton.addListener(this);
+    
+    gotoEndButton.setImages(false, true, true,
+        endImage, 1.0f, juce::Colours::transparentBlack,
+        endImage, 1.0f, juce::Colours::lightgrey,
+        endImage, 1.0f, juce::Colours::grey);
     addAndMakeVisible(gotoEndButton);
+    gotoEndButton.addListener(this);
+
+    loopButton.setImages(false, true, true,
+        loopImage, 1.0f, juce::Colours::transparentBlack,
+        loopImage, 1.0f, juce::Colours::lightgrey,
+        loopImage, 1.0f, juce::Colours::grey);    
     addAndMakeVisible(loopButton);
+    loopButton.addListener(this);
+
+    clearButton.setImages(false, true, true,
+        clearImage, 1.0f, juce::Colours::transparentBlack,
+        clearImage, 1.0f, juce::Colours::lightgrey,
+        clearImage, 1.0f, juce::Colours::grey);
+    addAndMakeVisible(clearABButton);
+    clearABButton.addListener(this);
+
+    abLoopButton.setImages(false, true, true,
+        LoopABImage, 1.0f, juce::Colours::transparentBlack,
+        LoopABImage, 1.0f, juce::Colours::lightgrey,
+        LoopABImage, 1.0f, juce::Colours::grey);
+    addAndMakeVisible(abLoopButton);
+    abLoopButton.addListener(this);
+
+    jumpBackButton.setImages(false, true, true,
+        jumpBackImage, 1.0f, juce::Colours::transparentBlack,
+        jumpBackImage, 1.0f, juce::Colours::lightgrey,
+        jumpBackImage, 1.0f, juce::Colours::grey);
+    addAndMakeVisible(jumpBackButton);
+    jumpBackButton.addListener(this);
+
+    jumpForwardButton.setImages(false, true, true,
+        jumpForwardImage, 1.0f, juce::Colours::transparentBlack,
+        jumpForwardImage, 1.0f, juce::Colours::lightgrey,
+        jumpForwardkImage, 1.0f, juce::Colours::grey);
+    addAndMakeVisible(jumpForwardButton);
+    jumpForwardButton.addListener(this);
+
+    
     addAndMakeVisible(setAButton);
     addAndMakeVisible(setBButton);
-    addAndMakeVisible(clearABButton);
-    addAndMakeVisible(abLoopButton);
-    addAndMakeVisible(jumpBackButton);
-    addAndMakeVisible(jumpForwardButton);
     addAndMakeVisible(speedSlider);
     addAndMakeVisible(volumeSlider);
     addAndMakeVisible(positionSlider);
@@ -40,18 +101,8 @@ PlayerGUI::PlayerGUI()
     addAndMakeVisible(clearPlaylistButton);
     clearPlaylistButton.addListener(this);
 
-    loadButton.addListener(this);
-    playButton.addListener(this);
-    pauseButton.addListener(this);
-    gotoStartButton.addListener(this);
-    gotoEndButton.addListener(this);
-    loopButton.addListener(this);
     setAButton.addListener(this);
     setBButton.addListener(this);
-    clearABButton.addListener(this);
-    abLoopButton.addListener(this);
-    jumpBackButton.addListener(this);
-    jumpForwardButton.addListener(this);
 
     speedSlider.setRange(0.5, 2.0, 0.1);
     speedSlider.setValue(1.0);
@@ -386,6 +437,7 @@ void PlayerGUI::updatePlaylistDisplay(const std::vector<juce::File>& files)
     playlistBox.updateContent();
     repaint();
 }
+
 
 
 
