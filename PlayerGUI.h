@@ -120,13 +120,13 @@ private:
     juce::ImageButton gotoStartButton;
     juce::ImageButton gotoEndButton;
     juce::ImageButton loopButton;
-    juce::TextButton setAButton{ "A" };
-    juce::TextButton setBButton{ "B" };
+    juce::TextButton setAButton{ "From" };
+    juce::TextButton setBButton{ "To" };
     juce::ImageButton clearABButton;
     juce::ImageButton abLoopButton;
     juce::ImageButton jumpBackButton;
     juce::ImageButton jumpForwardButton;
-    juce::ImageButton clearPlaylistButton;
+    juce::TextButton clearPlaylistButton{ "Clear Playlist" };
 
 
     juce::Image muteImage{ juce::ImageCache::getFromMemory(BinaryData::mute_png, BinaryData::mute_pngSize) };
@@ -172,6 +172,7 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
+
 
 
 
