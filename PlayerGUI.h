@@ -113,24 +113,34 @@ private:
         }
     };
     PlaylistModel playlistModel;
-    juce::TextButton loadButton{ "Load Files" };
+    juce::ImageButton loadButton;
     juce::ImageButton muteButton;
-    juce::TextButton playButton{ "Play" };
-    juce::TextButton pauseButton{ "Pause" };
-    juce::TextButton gotoStartButton{ "Start" };
-    juce::TextButton gotoEndButton{ "End" };
-    juce::TextButton loopButton{ "Loop: Off" };
-    juce::TextButton setAButton{ "From" };
-    juce::TextButton setBButton{ "To" };
-    juce::TextButton clearABButton{ "Clear" };
-    juce::TextButton abLoopButton{ "Custom Loop: Off" };
-    juce::TextButton jumpBackButton{ "- 10s" };
-    juce::TextButton jumpForwardButton{ "+ 10s" };
-    juce::TextButton clearPlaylistButton{ "Clear Playlist" };
+    juce::ImageButton playButton;
+    juce::ImageButton pauseButton;
+    juce::ImageButton gotoStartButton;
+    juce::ImageButton gotoEndButton;
+    juce::ImageButton loopButton;
+    juce::TextButton setAButton{ "A" };
+    juce::TextButton setBButton{ "B" };
+    juce::ImageButton clearABButton;
+    juce::ImageButton abLoopButton;
+    juce::ImageButton jumpBackButton;
+    juce::ImageButton jumpForwardButton;
+    juce::ImageButton clearPlaylistButton;
 
 
     juce::Image muteImage{ juce::ImageCache::getFromMemory(BinaryData::mute_png, BinaryData::mute_pngSize) };
     juce::Image unmuteImage{ juce::ImageCache::getFromMemory(BinaryData::unmute_png, BinaryData::unmute_pngSize) };
+    juce::Image loadImage{ juce::ImageCache::getFromMemory(BinaryData::load_png, BinaryData::load_pngSize) };
+    juce::Image playImage{ juce::ImageCache::getFromMemory(BinaryData::play_png, BinaryData::play_pngSize) };
+    juce::Image pauseImage{ juce::ImageCache::getFromMemory(BinaryData::pause_png, BinaryData::pause_pngSize) };
+    juce::Image StartImage{ juce::ImageCache::getFromMemory(BinaryData::start_png, BinaryData::start_pngSize) };
+    juce::Image EndImage{ juce::ImageCache::getFromMemory(BinaryData::end_png, BinaryData::end_pngSize) };
+    juce::Image loopImage{ juce::ImageCache::getFromMemory(BinaryData::loop_png, BinaryData::loop_pngSize) };
+    juce::Image jumpBackImage{ juce::ImageCache::getFromMemory(BinaryData::replay_10_png, BinaryData::replay_10_pngSize) };
+    juce::Image jumpForwardImage{ juce::ImageCache::getFromMemory(BinaryData::forward_10_png, BinaryData::forward_10_pngSize) };
+    juce::Image clearImage{ juce::ImageCache::getFromMemory(BinaryData::clear_png, BinaryData::clear_pngSize) };
+    juce::Image loopABImage{ juce::ImageCache::getFromMemory(BinaryData::loopAB_png, BinaryData::loopAB_pngSize) };
 
     juce::ListBox playlistBox;
     juce::TextButton addToPlaylistButton{ "Add to Playlist" };
@@ -162,6 +172,7 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
+
 
 
 
