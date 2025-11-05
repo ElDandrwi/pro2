@@ -1,3 +1,4 @@
+
 #include "PlayerAudio.h"
 
 PlayerAudio::PlayerAudio()
@@ -256,8 +257,8 @@ juce::String PlayerAudio::getFileInfo() const
 }
 void PlayerAudio::clearPlaylist()
 {
-	playlist.clear();
-	currentTrackIndex = -1;
+    playlist.clear();
+    currentTrackIndex = -1;
 }
 void PlayerAudio::addFileToPlaylist(const juce::File& file)
 {
@@ -296,21 +297,7 @@ void PlayerAudio::playPreviousTrack()
 
 bool PlayerAudio::isPlaying() const
 {
-	return  transportSource.isPlaying();
+    return  transportSource.isPlaying();
 }
 
-/*
-juce::String PlayerAudio::getSave() const
-{
-    juce::String info;
-    info += " --Saved-- \n";
 
-    for (const auto& pair : SaveList)
-    {
-        juce::String filePath = pair.first.getFileName();
-        double position = pair.second;
-        info += "File: " + filePath + "\n | Position: " + juce::String(position, 2) + " sec\n\n";
-    }
-    return info;
-}
-*/
