@@ -1,8 +1,9 @@
+
 #include "MainComponent.h"
 
 MainComponent::MainComponent()
 {
-    // ---------- Player 1 ----------
+
     guiPlayer1.setAudioPlayer(&audioPlayer1);
     guiPlayer1.onLoadFileRequest = [this]()
         {
@@ -26,7 +27,7 @@ MainComponent::MainComponent()
         };
     addAndMakeVisible(guiPlayer1);
 
-    // ---------- Player 2 ----------
+ 
     guiPlayer2.setAudioPlayer(&audioPlayer2);
     guiPlayer2.onLoadFileRequest = [this]()
         {
@@ -50,7 +51,7 @@ MainComponent::MainComponent()
         };
     addAndMakeVisible(guiPlayer2);
 
-    // ---------- Playlist ----------
+-
     addAndMakeVisible(playlistGUI);
     playlistGUI.onAddToPlaylistRequest = [this]()
         {
@@ -71,7 +72,7 @@ MainComponent::MainComponent()
                 });
         };
 
-   
+
     playlistGUI.onTrackSelected = [this](int index)
         {
             auto playlist = audioPlayer.getPlaylist();
@@ -79,7 +80,7 @@ MainComponent::MainComponent()
             {
                 juce::File file = playlist[index];
 
-               
+
                 if (!audioPlayer1.isPlaying())
                 {
                     audioPlayer1.loadFile(file);
@@ -101,7 +102,7 @@ MainComponent::MainComponent()
             playlistGUI.updatePlaylistDisplay(audioPlayer.getPlaylist());
         };
 
-   
+
     addAndMakeVisible(masterVolumeSlider);
     masterVolumeSlider.setRange(0.0, 1.0, 0.01);
     masterVolumeSlider.setValue(0.7);
@@ -118,7 +119,7 @@ MainComponent::MainComponent()
     addAndMakeVisible(balanceLabel);
     balanceLabel.setText("Balance", juce::dontSendNotification);
 
-    
+
     setAudioChannels(0, 2);
 }
 
@@ -177,18 +178,18 @@ void MainComponent::resized()
 {
     auto area = getLocalBounds();
 
-   
+
     auto playlistArea = area.removeFromBottom(180);
 
-    
+
     auto halfWidth = area.getWidth() / 2;
     guiPlayer1.setBounds(area.removeFromLeft(halfWidth).reduced(10));
     guiPlayer2.setBounds(area.reduced(10));
 
-    
+
     playlistGUI.setBounds(playlistArea.reduced(10));
 
-   
+
     auto controls = playlistArea.removeFromTop(40);
     masterVolumeLabel.setBounds(controls.removeFromLeft(100).reduced(5));
     masterVolumeSlider.setBounds(controls.removeFromLeft(150).reduced(5));
