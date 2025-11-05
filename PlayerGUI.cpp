@@ -1,3 +1,4 @@
+
 #include "PlayerGUI.h"
 
 PlayerGUI::PlayerGUI()
@@ -15,7 +16,7 @@ PlayerGUI::PlayerGUI()
     loadButton.setImages(false, true, true,
         loadImage, 1.0f, juce::Colours::transparentBlack,
         loadImage, 1.0f, juce::Colours::lightgrey,
-        loadImage, 1.0f, juce::Colours::grey);    
+        loadImage, 1.0f, juce::Colours::grey);
     addAndMakeVisible(loadButton);
     loadButton.addListener(this);
 
@@ -34,27 +35,27 @@ PlayerGUI::PlayerGUI()
     pauseButton.addListener(this);
 
     gotoStartButton.setImages(false, true, true,
-        startImage, 1.0f, juce::Colours::transparentBlack,
-        startImage, 1.0f, juce::Colours::lightgrey,
-        startImage, 1.0f, juce::Colours::grey);
+        StartImage, 1.0f, juce::Colours::transparentBlack,
+        StartImage, 1.0f, juce::Colours::lightgrey,
+        StartImage, 1.0f, juce::Colours::grey);
     addAndMakeVisible(gotoStartButton);
     gotoStartButton.addListener(this);
-    
+
     gotoEndButton.setImages(false, true, true,
-        endImage, 1.0f, juce::Colours::transparentBlack,
-        endImage, 1.0f, juce::Colours::lightgrey,
-        endImage, 1.0f, juce::Colours::grey);
+        EndImage, 1.0f, juce::Colours::transparentBlack,
+        EndImage, 1.0f, juce::Colours::lightgrey,
+        EndImage, 1.0f, juce::Colours::grey);
     addAndMakeVisible(gotoEndButton);
     gotoEndButton.addListener(this);
 
     loopButton.setImages(false, true, true,
         loopImage, 1.0f, juce::Colours::transparentBlack,
         loopImage, 1.0f, juce::Colours::lightgrey,
-        loopImage, 1.0f, juce::Colours::grey);    
+        loopImage, 1.0f, juce::Colours::grey);
     addAndMakeVisible(loopButton);
     loopButton.addListener(this);
 
-    clearButton.setImages(false, true, true,
+    clearABButton.setImages(false, true, true,
         clearImage, 1.0f, juce::Colours::transparentBlack,
         clearImage, 1.0f, juce::Colours::lightgrey,
         clearImage, 1.0f, juce::Colours::grey);
@@ -62,9 +63,9 @@ PlayerGUI::PlayerGUI()
     clearABButton.addListener(this);
 
     abLoopButton.setImages(false, true, true,
-        LoopABImage, 1.0f, juce::Colours::transparentBlack,
-        LoopABImage, 1.0f, juce::Colours::lightgrey,
-        LoopABImage, 1.0f, juce::Colours::grey);
+        loopABImage, 1.0f, juce::Colours::transparentBlack,
+        loopABImage, 1.0f, juce::Colours::lightgrey,
+        loopABImage, 1.0f, juce::Colours::grey);
     addAndMakeVisible(abLoopButton);
     abLoopButton.addListener(this);
 
@@ -78,11 +79,11 @@ PlayerGUI::PlayerGUI()
     jumpForwardButton.setImages(false, true, true,
         jumpForwardImage, 1.0f, juce::Colours::transparentBlack,
         jumpForwardImage, 1.0f, juce::Colours::lightgrey,
-        jumpForwardkImage, 1.0f, juce::Colours::grey);
+        jumpForwardImage, 1.0f, juce::Colours::grey);
     addAndMakeVisible(jumpForwardButton);
     jumpForwardButton.addListener(this);
 
-    
+
     addAndMakeVisible(setAButton);
     addAndMakeVisible(setBButton);
     addAndMakeVisible(speedSlider);
@@ -92,7 +93,7 @@ PlayerGUI::PlayerGUI()
     addAndMakeVisible(abLoopLabel);
     addAndMakeVisible(waveformDisplay);
     addAndMakeVisible(fileInfoLabel);
-    //addAndMakeVisible(SaveLabel);
+  
     addAndMakeVisible(addToPlaylistButton);
     addToPlaylistButton.addListener(this);
 
@@ -129,7 +130,7 @@ PlayerGUI::PlayerGUI()
     fileInfoLabel.setColour(juce::Label::textColourId, juce::Colours::white);
     playlistBox.setModel(&playlistModel);
 
-    //SaveLabel.setText(" --SAVE-- \n", juce::dontSendNotification);
+
 
     startTimer(50);
     playlistModel.onItemClicked = [this](int index)
