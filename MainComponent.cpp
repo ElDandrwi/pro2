@@ -169,7 +169,7 @@ void MainComponent::releaseResources()
 
 void MainComponent::paint(juce::Graphics& g)
 {
-    g.fillAll(juce::Colours::darkgrey);
+      g.fillAll(juce::Colour::fromRGB(40, 30, 60));
 }
 
 void MainComponent::resized()
@@ -194,3 +194,4 @@ void MainComponent::resized()
     balanceLabel.setBounds(controls.removeFromLeft(100).reduced(5));
     balanceSlider.setBounds(controls.removeFromLeft(150).reduced(5));
 }
+
