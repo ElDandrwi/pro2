@@ -16,7 +16,7 @@ SimpleAudioPlayerApplication::MainWindow::MainWindow(juce::String name)
 {
     setUsingNativeTitleBar(true);
     setContentOwned(new MainComponent(), true);
-    centreWithSize(800, 600); // ÎáíåÇ ÃßÈÑ ãä 400x200 ÚÔÇä ßá ÍÇÌÉ ÊÈÇä
+    centreWithSize(800, 600); 
     setVisible(true);
 }
 
@@ -24,3 +24,4 @@ void SimpleAudioPlayerApplication::MainWindow::closeButtonPressed()
 {
     juce::JUCEApplication::getInstance()->systemRequestedQuit();
 }
+
